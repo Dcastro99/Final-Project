@@ -129,7 +129,7 @@ If all else fails: Group discussion is key. Talk about what we are not compromis
   * Team members can clone the repository initially, then for each task they will: Branch off of main, make changes, commit changes (you can commit as much as you want for the tasks). Pushed back to origin on the remote repository, where the tasks will be PR'd and reviewed by another team member.
 * Will you be using a PR review workflow? If so, consider:
   * How many people must review a PR?
-    * 1 Person who isn't the creator of the PR.
+    * 2 People who aren't the creator of the PR.
   * Who merges PRs?
     * The aforementioned reviewer.
   * How often will you merge?
