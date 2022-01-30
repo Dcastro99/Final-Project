@@ -7,7 +7,8 @@
 - pong
 - connect four
 - best local coffee
-- escaperoom
+## escaperoom
+
   - locations: codefellows office or museum?
   - get pictures from online 
   - you find items that unlock individual rooms
@@ -24,12 +25,21 @@
     4. 
 
   ## MVP:
-- turn in only in two directions. (forward and back)
-- one puzzle that gives you the full code for the door.
-- at least one item that you hold to finish the game
-- enter your name
+- two rooms
+- items to find clickable
+- when found a  win condition
+- local storage
+- 
 
 ## whats needed to make the project
 - name input
-- localstorage
-- 
+- local storage
+
+## two ideas
+
+1. Escaperoom - we arewanting to create an escaperoom that you find items in each room that will allow you to move into the next. these items will be stored into local storaage as you proceed from room to room. when all items are collected you escape!
+
+2. Hang-man :
+the idea is simple. Have a list of words that would randomly genereate and each word will have its own leader board. This will be stored in local storage to reference each competitors attempts and score.
+
+ > We are choosing option 1.
