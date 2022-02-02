@@ -1,9 +1,10 @@
 # Group Plan
 
 Link to our Project Presentation:
-https://docs.google.com/presentation/d/1Ktb-VsFcCaPdSAyDxVwp_yGzO07qUEvvfgPuGTjx4Bc/edit?usp=sharing
+<https://docs.google.com/presentation/d/1Ktb-VsFcCaPdSAyDxVwp_yGzO07qUEvvfgPuGTjx4Bc/edit?usp=sharing>
 
 Team Members:
+
 * Hugo Thompson
 * Harvey Francois
 * Marta Deneke
@@ -12,31 +13,50 @@ Team Members:
 ## Cooperation Plan
 
 ### Hugo
+
 #### Strengths
+
 * I feel confident about javascript and on a social side I feel confident in working with the team.
+
 #### How I can use them
+
 * Try to help other members of the team when they need it and always be ready to dive into the backend!
+
 #### Professional Weakness
+
 * I am somewhat of a procrastinator at times and I want to be better at not putting of tasks for myself.
 
 ### Marta
+
 #### Strengths
+
 * I am organized and good at keeping things organized
 * I am a good learner
+
 #### How I can use them
+
 * Keeping the team on track with agile, organize tasks
+
 #### Professional Weakness
+
 * I usually work on my own, but I'm noticing that it's needed to work in groups for this industry. Because of that, I want to build that skill.
 
 ### Harvey
+
 #### Strengths
+
 * I am comfortable with javascript. I'm friendly, and I keep morale high.
+
 #### How I can use them
+
 * Contribute where I can
+
 #### Professional Weakness
+
 * I haven't had much experience working as a team, so I hope to get better at it and improve my teamwork skills
 
 ### Danny
+
 #### Strengths
 
 * I am more comfortable with css and the design/ux, in a team I'm an easygoing and friendly fellow! I really like motivating others.
@@ -57,7 +77,7 @@ Team Members:
 
 ### Work style: Work solo, speak up if you need help and meet back as a group discussion in intervals
 
-## Conflict Plan 
+## Conflict Plan
 
 >Your team should agree on a process for handing disagreements, should they arise. It is better to have a plan in place ahead of time so you can all refer back to it when necessary.
 
@@ -136,3 +156,15 @@ If all else fails: Group discussion is key. Talk about what we are not compromis
     * Just as it is necessary.
   * How will you communicate that it’s time to merge?
     * It's cool to merge whenever, because github will not let you merge a merge conflicted pr.
+
+## User stories
+
+* As a player that likes exploring, I will enjoy reaching new parts of the escaperoom by using my problem solving skills.
+
+* As a player that likes achieving, I will enjoy collecting all the items and eventually winning the game.
+
+* As a player that struggles with a game, the hint system will help me progress.
+
+* As a player I'm looking for a game that is comedic and a light-hearted experience
+
+* As a coder, I can appreciate the relatability of the characters problem.
