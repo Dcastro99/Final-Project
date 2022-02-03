@@ -10,9 +10,22 @@ function HintSystem() {
   this.onCooldown = false;
   this.startCooldown = function() {
     this.onCooldown = true;
-    setTimeout(this.cooldownFinished, this.hintCooldown);
+    setTimeout(this.onCooldownFinished, this.hintCooldown);
   };
-  this.cooldownFinished = function() {
+  this.onCooldownFinished = function() {
     this.onCooldown = false;
+  };
+  this.renderHintButton = function() {
+    //this needs to include an event listener that calls onHintRequested
+    return;
+  };
+  this.onHintRequested = function(event) {
+    if(this.onCooldown) {
+      console.log('Hint Rejected, On Cooldown!');
+      return;
+    }
+    console.log('Hint Accepted, Starting Cooldown...');
+    this.startCooldown();
+    return;
   };
 }
