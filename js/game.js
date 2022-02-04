@@ -29,3 +29,20 @@ function HintSystem() {
     return;
   };
 }
+// Temporary player dummy
+const player = {
+  popups: []
+};
+function Popup(renderFunction) {
+  this.dismissed = false;
+  this.renderFunction = renderFunction;
+  this.renderListen = function(){
+    document.appendChild(document.createElement('section'));
+    this.renderFunction();
+  };
+  this.onDismiss = function(event){
+    this.dismissed = true;
+    popups.filter(popup => !popup.dismissed);
+  };
+  player.popups.push(this);
+}
