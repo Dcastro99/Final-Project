@@ -11,6 +11,7 @@ function Player(name){
 function save(){
   let gameSave = JSON.stringify(player);
   localStorage.setItem('player', gameSave);
+}
 
 
 // Helpers
@@ -32,3 +33,4 @@ function reinstantiateArray(stringifiedArray, Type) {
   return loadedItems;
 
 }
+
