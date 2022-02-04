@@ -1,7 +1,5 @@
 
-<<<<<<< HEAD
-  
-=======
+
 // Helpers
 
 ///Takes a number in seconds and multiplies it to its value in miliseconds
@@ -20,4 +18,4 @@ function reinstantiateArray(stringifiedArray, Type) {
   }
   return loadedItems;
 }
->>>>>>> b49ebaa42cddebef2f9b6f14865ad0e8bc9b7a07
+
