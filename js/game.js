@@ -3,6 +3,20 @@
 const main = document.querySelector('main');
 
 
+// const player = new Player(prompt('what is your name?'));
+const player = new Player('Bob');
+function Player(name){
+  this.name = name;
+  this.inventory = [];
+  this.popups = [];
+  this.instantiateInventory = function(){
+    this.inventory = new Inventory('[]');
+  };
+  this.instantiateInventory();
+}
+
+
+
 function Items(name,x,y) {
   this.name = name;
   this.src = `images/${name}.png`;
@@ -17,7 +31,7 @@ function Items(name,x,y) {
   this.render();
 }
 
-let logo = new Items('logo', '30px', '10rem');
+let logo = new Items('logo', '30px', '5rem');
 // let laptop = new Items('laptop');
 // let keyboard = new Items('keyboard');
 // let mouse = new Items('mouse');
@@ -27,7 +41,13 @@ let logo = new Items('logo', '30px', '10rem');
 
 function Inventory(stringifiedItems) {
   ///List of Item types
-  this.items = reinstantiateArray(stringifiedItems, Item);
+  this.items = reinstantiateArray(stringifiedItems, Items);
+  this.render = function (){
+    let ui = document.querySelector('#bottom-ui');
+    ui.appendChild(document.createElement('section'));
+
+  };
+  this.render();
 }
 
 function HintSystem() {
@@ -53,13 +73,10 @@ function HintSystem() {
     this.startCooldown();
     return;
   };
-  
+
 }
 
-// Temporary player dummy
-const player = {
-  popups: []
-};
+
 function Popup(renderFunction) {
   this.dismissed = false;
   this.renderFunction = renderFunction;

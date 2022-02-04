@@ -1,0 +1,27 @@
+
+* {
+  box-sizing: border-box;
+}
+
+section {
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+.flex-vertical {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.flex-horizontal {
+  display: flex;
+  justify-content: space-between;
+}
+
+#bottom-ui > * {
+  width: max-content;
+}
+div {
+  height: max-content;
+}
