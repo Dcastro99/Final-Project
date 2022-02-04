@@ -1,9 +1,9 @@
-'Use strict'
+'Use strict';
 
 
 const player = new Player(prompt('what is your name?'));
 function Player(name){
-  this.name = player;
+  this.name = name;
   this.inventory = [];
 }
 
