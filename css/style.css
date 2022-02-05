@@ -7,6 +7,12 @@ main{
   height: 110px;
 }
 
+/* main when dimmed */
+.dimmed {
+  opacity: 0.5;
+  background-color: black;
+}
+
 section {
   width: 1560px;
   border: 1px solid black;
@@ -136,8 +142,16 @@ footer{
 }
 
 .popup {
+  opacity: 1;
+  background-color: white;
+  width: 40%;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   animation-name: landing;
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 

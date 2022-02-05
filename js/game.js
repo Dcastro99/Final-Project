@@ -5,12 +5,12 @@ const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
 //save after loading player to lock in new player data on first visits
-save()
+save();
 
 ///saves game state.
 function save(){
   //save the last updated hintCooldown we should have when the next page loads
-  player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime
+  player.hintCooldown = Date.now() - player.hintSystem.hintStartTime;
   let gameSave = JSON.stringify(player);
   localStorage.setItem('player', gameSave);
 }
@@ -19,7 +19,6 @@ function save(){
 function load(){
   let recieved = localStorage.getItem('player');
   if(recieved) {
-    console.log(recieved)
     recieved = JSON.parse(recieved);
   }
   return new Player(recieved);
@@ -42,12 +41,12 @@ function Player(savedata){
     }
     this.name = prompt('What is your name?', 'Bob');
     this.inventory = new Inventory();
-    this.hintSystem = new HintSystem()
+    this.hintSystem = new HintSystem();
   } else {
     //returning player
     this.name = savedata.name;
     this.inventory = new Inventory(savedata.inventory.items);
-    this.hintSystem = new HintSystem(savedata.hintCooldown)
+    this.hintSystem = new HintSystem(savedata.hintCooldown);
   }
 }
 
@@ -135,7 +134,7 @@ function Items(name, collected, page, x, y, eventCallback) {
       //we don't have to check if querySelector did nothing because there should always be enough slots for items
       //let slot = document.querySelector('.itemslot:empty');
       //slot.appendChild(img);
-      return
+      return;
     }
     img.addEventListener('click', this.eventCallback);
     img.style.cssText = `position: absolute; left: ${x}; bottom: ${y}`;
@@ -159,7 +158,7 @@ function HintSystem(initialCooldown) {
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function(override) {
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
-    this.hintStartTime = new Date().now()
+    this.hintStartTime = Date.now();
   };
   ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function() {
@@ -182,13 +181,13 @@ function HintSystem(initialCooldown) {
     return;
   };
   if(initialCooldown) {
-    this.startCooldown(initialCooldown)
+    this.startCooldown(initialCooldown);
   }
 }
 
 function examplePopup(section) {
-  let p = section.appendChild(document.createElement('p'))
-  p.textContent = "Woah, we're halfway there. Woooah hoah! Livin' on a prayer!"
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'Woah, we\'re halfway there. Woooah hoah! Livin\' on a prayer!';
 }
 
 /**
@@ -201,22 +200,27 @@ function examplePopup(section) {
 function Popup(renderFunction) {
   this.renderFunction = renderFunction;
   this.renderListen = function(){
+    main.classList.add('dimmed')
     this.section = main.appendChild(document.createElement('section'));
-    this.section.classList.add('popup')
+    this.section.classList.add('popup');
     this.renderFunction(this.section);
-    main.addEventListener('click', this.onDismiss)
+    main.addEventListener('click', this.onDismiss);
   };
-  this.onDismiss = function(event){
-    main.removeEventListener('click', this.onDismiss)
-    this.section.remove()
-    this.section = undefined
-    popups.filter(popup => !popup.section);
+  this.onDismiss = function(){
+    main.classList.remove('dimmed')
+    let popup = player.popups[0];
+    main.removeEventListener('click', popup.onDismiss);
+    popup.section.remove();
+    popup.section = undefined;
+    player.popups.shift();
+    player.popups.filter(popup => !popup.section);
   };
   player.popups.push(this);
+  this.renderListen();
 }
 
 function test() {
-  new Popup(examplePopup)
+  new Popup(examplePopup);
 }
 // laptop item event
 
