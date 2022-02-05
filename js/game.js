@@ -136,17 +136,6 @@ function Items(name, collected, page, x, y, eventCallback) {
   };
 }
 
-let logo = new Items('logo', '500px', '25rem');
-let laptop = new Items('laptop', '50px', '25rem');
-// let keyboard = new Items('keyboard');
-// let mouse = new Items('mouse');
-// let flashlight = new Items('flashlight');
-// let backback = new Items('backback');
-// let textBooks = new Items('textbooks');
-
-
-this.render();
-}
 
 /**
  * ## HintSystem
