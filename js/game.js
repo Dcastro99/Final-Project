@@ -64,7 +64,7 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, 'index.html', '30px', '5rem'));
+    this.items.push(new Items('logo', false, 'index.html', '30px', '5rem', laptopClick));
     // items.push(new Items('laptop'));
     // items.push(new Items('keyboard'));
     // items.push(new Items('mouse'));
@@ -98,19 +98,23 @@ function Inventory(pojoItems) {
   this.render();
 }
 
+
 /// Item type! They old the name, data the img tag needs, and location it needs to render.
 /// It also renders itself onto the page, but Inventory type decides when.
-function Items(name, collected, page, x, y) {
+function Items(name, collected, page, x, y, eventCallback) {
+
   this.name = name;
   this.collected = collected;
   this.page = page;
   this.src = `images/${name}.png`;
   this.x = x;
   this.y = y;
+  this.eventCallback = eventCallback;
   this.render = function() {
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
     if(found) {
+      found.removeEventListener('click', this.eventCallback);
       found.remove();
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
@@ -127,9 +131,54 @@ function Items(name, collected, page, x, y) {
       //slot.appendChild(img);
       return
     }
+    img.addEventListener('click', this.eventCallback);
     img.style.cssText = `position: absolute; left: ${x}; bottom: ${y}`;
   };
 }
+
+
+// let logo = new Items('logo', '500px', '25rem');
+// let laptop = new Items('laptop');
+// let keyboard = new Items('keyboard');
+// let mouse = new Items('mouse');
+// let flashlight = new Items('flashlight');
+// let backback = new Items('backback');
+// let textBooks = new Items('textbooks');
+
+function Inventory(stringifiedItems) {
+  ///List of Item types
+  this.items = reinstantiateArray(stringifiedItems, Items);
+  this.render = function (){
+    // let bui = document.querySelector('#bottom-ui');
+    // bui.appendChild(document.createElement('section'));
+    let tui = document.querySelector('#top-ui');
+    let objectives = tui.appendChild(document.createElement('section'));
+    objectives.id = 'objectives';
+
+    let a = document.createElement('a');
+    if (window.location.pathname==='/index.html'){
+      a.href = '/classroom.html';
+
+    } else {
+      a.href = '/index.html';
+    }
+    let div = document.createElement('div');
+    div.textContent = 'Nextroom';
+    div.id = 'nextRoomButton';
+    a.appendChild(div);
+    tui.appendChild(a);
+
+    let hintbtn = document.createElement('button');
+    hintbtn.innerHTML = 'Hint Button';
+    let hintButton = tui.appendChild(hintbtn);
+    hintButton.id = 'hintButton';
+
+   
+  };
+
+  this.render();
+}
+
 
 /**
  * ## HintSystem
@@ -137,6 +186,7 @@ function Items(name, collected, page, x, y) {
  * HintSystem manages all the hint-based functionality of the game. It renders the button for hints on the screen,
  * keeps track of the cooldown for using it
  */
+
 function HintSystem(initialCooldown) {
   ///how much time between asking for hints.
   this.hintCooldown = SECONDS(60);
@@ -194,4 +244,14 @@ function Popup(renderFunction) {
   };
   player.popups.push(this);
 }
+
+// laptop item event
+
+function laptopClick(event) {
+  let itemClicked = event.target.alt;
+  if (itemClicked === 'laptop') {
+    alert ('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
+  }
+}
+
 
