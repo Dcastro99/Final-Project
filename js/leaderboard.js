@@ -10,7 +10,7 @@ function LeaderBoard(name, time, hints){
 
 
 
-
+///Leaderboard type. Holds references to Attempts and loads them in from local storage.
 function Leaderboard(stringifiedAttempts) {
   this.attempts = reinstantiateArray(stringifiedAttempts, Attempt);
   this.renderAttempts = function() {
@@ -18,6 +18,7 @@ function Leaderboard(stringifiedAttempts) {
   };
 }
 
+///Attempt type, just holds the score of the run. Held and rendered by leaderboard.
 function Attempt(name, time, usedHints) {
   this.name = name;
   this.time = time;
