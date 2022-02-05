@@ -1,9 +1,7 @@
 'use strict';
 
-
-
-
 ///Leaderboard type. Holds references to Attempts and loads them in from local storage.
+
 
 function Leaderboard(stringifiedAttempts) {
   this.attempts = reinstantiateArray(stringifiedAttempts, Attempt);
