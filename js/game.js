@@ -7,7 +7,7 @@ const player = load();
 const movementButton = document.getElementById('nextRoomButton');
 
 ///saves game state.
-function save(){
+function save() {
   //save the last updated hintCooldown we should have when the next page loads
   player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime;
   let gameSave = JSON.stringify(player);
@@ -15,7 +15,7 @@ function save(){
 }
 
 ///loads game state, returning a Player
-function load(){
+function load() {
   let recieved = localStorage.getItem('player');
   recieved = JSON.parse(recieved);
   return new Player(recieved);
@@ -28,12 +28,12 @@ function load(){
  * Player is the main object that holds the state of the game, and many references to other systems
  * inside like Inventory and HintSystem. This is so saving can stringify a single object and just unpack it on loading.
  */
-function Player(savedata){
+function Player(savedata) {
   //should always be clear, who wants popups from last page?
   this.popups = [];
-  if(!savedata) {
+  if (!savedata) {
     ///first time setup
-    if(window.location.pathname !== '/index.html') {
+    if (window.location.pathname !== '/index.html') {
       window.location.href = 'index.html';
       return; //this will run again on the correct site
     }
@@ -58,8 +58,8 @@ function Inventory(pojoItems) {
   this.items = [];
   ///List of collected Types
   this.collected = [];
-  if(pojoItems) {
-    for(let pojoItem of pojoItems) {
+  if (pojoItems) {
+    for (let pojoItem of pojoItems) {
       let item = new Items(pojoItem.name, pojoItem.collected, pojoItem.page, pojoItem.x, pojoItem.y);
       item.render();
       this.items.push(item);
@@ -74,14 +74,13 @@ function Inventory(pojoItems) {
     // items.push(new Items('backback'));
     // items.push(new Items('textbooks'));
   }
-  this.render = function() {
+  this.render = function () {
     let tui = document.querySelector('#top-ui');
     let objectives = tui.appendChild(document.createElement('section'));
     objectives.id = 'objectives';
 
     let a = document.createElement('a');
     a.href = '#';
-
     let div = document.createElement('div');
     div.textContent = 'Nextroom';
     a.id = 'nextRoomButton';
@@ -108,22 +107,25 @@ function Items(name, collected, page, x, y, eventCallback) {
   this.x = x;
   this.y = y;
   this.eventCallback = eventCallback;
-  this.render = function() {
+  this.render = function () {
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
-    if(found) {
+    if (found) {
       found.removeEventListener('click', this.eventCallback);
       found.remove();
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
+
+
     if(!collected && window.location.href !== this.page) {
+
       return;
     }
     let img = main.appendChild(document.createElement('img'));
     img.src = this.src;
     img.alt = this.name;
     img.id = this.name;
-    if(collected) {
+    if (collected) {
       //we don't have to check if querySelector did nothing because there should always be enough slots for items
       //let slot = document.querySelector('.itemslot:empty');
       //slot.appendChild(img);
@@ -134,13 +136,13 @@ function Items(name, collected, page, x, y, eventCallback) {
   };
 }
 
+
 /**
  * ## HintSystem
  *
  * HintSystem manages all the hint-based functionality of the game. It renders the button for hints on the screen,
  * keeps track of the cooldown for using it
  */
-
 function HintSystem(initialCooldown) {
   ///how much time between asking for hints.
   this.hintCooldown = SECONDS(60);
@@ -149,23 +151,23 @@ function HintSystem(initialCooldown) {
   ///when we started the cooldown
   this.hintStartTime;
   ///Starts the cooldown and disables getting hints.
-  this.startCooldown = function(override) {
+  this.startCooldown = function (override) {
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = new Date().now()
   };
   ///event for when the timeout finishes, enables hint button
-  this.onCooldownFinished = function() {
+  this.onCooldownFinished = function () {
     this.currentTimeout = undefined;
     //unlock button visually
   };
   ///renders the button onto the page.
-  this.renderHintButton = function() {
+  this.renderHintButton = function () {
     //this needs to include an event listener that calls onHintRequested
     return;
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
-  this.onHintRequested = function(event) {
-    if(this.currentTimeout) {
+  this.onHintRequested = function (event) {
+    if (this.currentTimeout) {
       console.log('Hint Rejected, On Cooldown!');
       return;
     }
@@ -173,8 +175,10 @@ function HintSystem(initialCooldown) {
     this.startCooldown();
     return;
   };
+
   if(initialCooldown) {
     this.startCooldown(initialCooldown);
+
   }
 }
 
@@ -188,11 +192,11 @@ function HintSystem(initialCooldown) {
 function Popup(renderFunction) {
   this.dismissed = false;
   this.renderFunction = renderFunction;
-  this.renderListen = function(){
+  this.renderListen = function () {
     document.appendChild(document.createElement('section'));
     this.renderFunction();
   };
-  this.onDismiss = function(event){
+  this.onDismiss = function (event) {
     this.dismissed = true;
     popups.filter(popup => !popup.dismissed);
   };
@@ -205,8 +209,11 @@ function Popup(renderFunction) {
 function laptopClick(event) {
   let itemClicked = event.target.alt;
   if (itemClicked === 'laptop') {
-    alert ('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
+    alert('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
   }
+  player.inventory.collected.push();
+  let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
+  item.render();
 }
 // flashlight item event
 
