@@ -129,27 +129,47 @@ footer{
   text-align: center;
 }
 
-/* Flishlight button */
+/* about-us */
 
-#nextRoomButton {
-  border: 5px solid black;
-  border-width: 3px;
+ h2 {
+  font-size: 40px;
   text-align: center;
-  background-color: rgba(128, 128, 128, 0.734);
-  color: lightgrey;
-  padding: .5rem 1rem;
-  width: max-content;
-  height: max-content;
-  font-size: .8rem;
-  margin: 1rem;
-  pointer-events: none;
+  border-style: solid;
+  background-color: blueviolet;
+  padding: 1rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
 }
-#nextRoomButton.clicks-allowed {
-  background-color: rosybrown;
-  color: white;
-  cursor: pointer;
-  pointer-events: auto;
+
+h3 {
+  border-style: solid;
+  width: 70px;
+  height: 50px;
+  text-align: center;
+  position: relative;
 }
-#nextRoomButton.clicks-allowed:hover {
-  background-color: rgb(211, 187, 175)
+
+header {
+  margin-bottom: 0;
+}
+
+ .aboutMe {
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+main > div {
+  display: flex;
+  width: 1700px;
+  margin: 6rem 0;
+  align-items: center;
+}
+
+div {
+  justify-content: space-between;
+}
+
+h4{
+  font-size: 1.5rem;
+  
 }
