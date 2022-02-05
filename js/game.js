@@ -142,50 +142,6 @@ function Items(name, collected, page, x, y, eventCallback) {
   };
 }
 
-
-// let logo = new Items('logo', '500px', '25rem');
-// let laptop = new Items('laptop');
-// let keyboard = new Items('keyboard');
-// let mouse = new Items('mouse');
-// let flashlight = new Items('flashlight');
-// let backback = new Items('backback');
-// let textBooks = new Items('textbooks');
-
-function Inventory(stringifiedItems) {
-  ///List of Item types
-  this.items = reinstantiateArray(stringifiedItems, Items);
-  this.render = function (){
-    // let bui = document.querySelector('#bottom-ui');
-    // bui.appendChild(document.createElement('section'));
-    let tui = document.querySelector('#top-ui');
-    let objectives = tui.appendChild(document.createElement('section'));
-    objectives.id = 'objectives';
-
-    let a = document.createElement('a');
-    if (window.location.pathname==='/index.html'){
-      a.href = '/classroom.html';
-
-    } else {
-      a.href = '/index.html';
-    }
-    let div = document.createElement('div');
-    div.textContent = 'Nextroom';
-    div.id = 'nextRoomButton';
-    a.appendChild(div);
-    tui.appendChild(a);
-
-    let hintbtn = document.createElement('button');
-    hintbtn.innerHTML = 'Hint Button';
-    let hintButton = tui.appendChild(hintbtn);
-    hintButton.id = 'hintButton';
-
-   
-  };
-
-  this.render();
-}
-
-
 /**
  * ## HintSystem
  *
