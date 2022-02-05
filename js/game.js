@@ -148,6 +148,12 @@ let laptop = new Items('laptop', '50px', '25rem');
 this.render();
 }
 
+/**
+ * ## HintSystem
+ *
+ * HintSystem manages all the hint-based functionality of the game. It renders the button for hints on the screen,
+ * keeps track of the cooldown for using it
+ */
 function HintSystem(initialCooldown) {
   ///how much time between asking for hints.
   this.hintCooldown = SECONDS(60);
