@@ -2,7 +2,7 @@
 * {
   box-sizing: border-box;
 }
-main{
+#rooms{
   max-width: 1500px;
   height: 110px;
 }
@@ -87,6 +87,7 @@ div {
   min-height: 96px;
 }
 #inventory{
+
   margin-bottom: 5rem;
 }
 /* leader board CSS */
@@ -132,4 +133,26 @@ div {
 
 footer{
   text-align: center;
+}
+
+/* Flishlight button */
+
+#nextRoomButton {
+  background-color: rgba(128, 128, 128, 0.734);
+  color: lightgrey;
+  padding: .5rem 1rem;
+  width: max-content;
+  height: max-content;
+  font-size: .8rem;
+  margin: 1rem;
+  pointer-events: none;
+}
+#nextRoomButton.clicks-allowed {
+  background-color: rosybrown;
+  color: white;
+  cursor: pointer;
+  pointer-events: auto;
+}
+#nextRoomButton.clicks-allowed:hover {
+  background-color: rgb(211, 187, 175)
 }

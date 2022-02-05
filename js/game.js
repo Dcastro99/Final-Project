@@ -4,6 +4,7 @@
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+const myFlashlight = document.getElementById('nextRoomButton');
 
 ///saves game state.
 function save(){
@@ -19,6 +20,7 @@ function load(){
   recieved = JSON.parse(recieved);
   return new Player(recieved);
 }
+
 
 function Player(savedata){
   //should always be clear, who wants popups from last page?
@@ -102,7 +104,7 @@ let logo = new Items('logo', '500px', '25rem');
 // let laptop = new Items('laptop');
 // let keyboard = new Items('keyboard');
 // let mouse = new Items('mouse');
-// let flashlight = new Items('flashlight');
+let flashlight = new Items('flashlight', '800px','45rem');
 // let backback = new Items('backback');
 // let textBooks = new Items('textbooks');
 
@@ -110,35 +112,47 @@ function Inventory(stringifiedItems) {
   ///List of Item types
   this.items = reinstantiateArray(stringifiedItems, Items);
   this.render = function (){
-    // let bui = document.querySelector('#bottom-ui');
-    // bui.appendChild(document.createElement('section'));
     let tui = document.querySelector('#top-ui');
     let objectives = tui.appendChild(document.createElement('section'));
     objectives.id = 'objectives';
 
-    let a = document.createElement('a');
-    if (window.location.pathname==='/index.html'){
-      a.href = '/classroom.html';
-
-    } else {
-      a.href = '/index.html';
-    }
-    let div = document.createElement('div');
-    div.textContent = 'Nextroom';
-    div.id = 'nextRoomButton';
-    a.appendChild(div);
-    tui.appendChild(a);
 
     let hintbtn = document.createElement('button');
     hintbtn.innerHTML = 'Hint Button';
     let hintButton = tui.appendChild(hintbtn);
     hintButton.id = 'hintButton';
 
-   
   };
 
   this.render();
 }
+function rendernextRoomButton(){
+  let a = document.createElement('a');
+    if (window.location.pathname==='/index.html'){
+      a.href = '/classroom.html';
+
+    } else {
+      a.href = '/index.html';
+    
+  let div = document.createElement('div');
+  div.textContent = 'Next room';
+  div.id = 'nextRoomButton';
+  a.appendChild(div);
+  tui.appendChild(a);
+}
+
+// Flashlight event
+
+function flashlightClick(event) {
+  let  itemClicked = event.target.alt;
+  if (itemClicked === 'flashlight') {
+  
+    myFlashlight.className = 'clicks-allowed';
+    myFlashlight.addEventListener('click', flashlightClick);
+  }
+}
+
+
 
 function HintSystem(initialCooldown) {
   this.hintCooldown = SECONDS(60);
@@ -186,4 +200,3 @@ function Popup(renderFunction) {
   };
   player.popups.push(this);
 }
-
