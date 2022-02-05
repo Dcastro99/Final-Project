@@ -1,5 +1,8 @@
 'use strict';
 
+
+
+
 function Leaderboard(stringifiedAttempts) {
   this.attempts = reinstantiateArray(stringifiedAttempts, Attempt);
   this.renderAttempts = function() {
