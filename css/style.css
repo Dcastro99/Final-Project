@@ -2,9 +2,9 @@
 * {
   box-sizing: border-box;
 }
-main{
-  max-width: 1500px;
-  height: 110px;
+#rooms{
+  max-width: max-content;
+  height: max-content;
 }
 
 section {
@@ -55,13 +55,7 @@ div {
   padding: 4rem;
 }
 
-#nextRoomButton {
-  height: 5px;
-  border: 5px solid black;
-  border-width: 3px;
-  padding: 4rem;
-  text-align: center;
-}
+
 
 #hintButton{
   width: 175px;
@@ -87,6 +81,7 @@ div {
   min-height: 96px;
 }
 #inventory{
+
   margin-bottom: 5rem;
 }
 /* leader board CSS */

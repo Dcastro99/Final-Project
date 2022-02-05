@@ -1,14 +1,6 @@
 
 'Use strict';
 
-
-
-function save(){
-  let gameSave = JSON.stringify(player);
-  localStorage.setItem('player', gameSave);
-}
-
-
 // Helpers
 
 ///Takes a number in seconds and multiplies it to its value in miliseconds
