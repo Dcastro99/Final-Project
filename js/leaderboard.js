@@ -7,6 +7,7 @@ function Leaderboard(stringifiedAttempts) {
   };
 }
 
+///Attempt type, just holds the score of the run. Held and rendered by leaderboard.
 function Attempt(name, time, usedHints) {
   this.name = name;
   this.time = time;
