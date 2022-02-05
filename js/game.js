@@ -101,8 +101,8 @@ function Items(name, collected, page, x, y, eventCallback) {
   };
 }
 
-// let logo = new Items('logo', '500px', '25rem');
-// let laptop = new Items('laptop');
+ let logo = new Items('logo', '500px', '25rem');
+ let laptop = new Items('laptop', '50px', '25rem');
 // let keyboard = new Items('keyboard');
 // let mouse = new Items('mouse');
 // let flashlight = new Items('flashlight');
@@ -137,7 +137,7 @@ function Inventory(stringifiedItems) {
     let hintButton = tui.appendChild(hintbtn);
     hintButton.id = 'hintButton';
 
-   
+
   };
 
   this.render();
@@ -197,6 +197,9 @@ function laptopClick(event) {
   if (itemClicked === 'laptop') {
     alert ('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
   }
+  player.inventory.collected.push();
+  let item = player.inventory.items.filter(possible => possible.name ==='laptop')[0];
+  item.render();
 }
 
 
