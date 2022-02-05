@@ -26,8 +26,7 @@ function Player(savedata){
   if(!savedata) {
     ///first time setup
     if(window.location.pathname != '/index.html') {
-      console.log(window.location.pathname)
-      //window.location.href = 'index.html';
+      window.location.href = 'index.html';
       return; //this will run again on the correct site
     }
     this.name = prompt('What is your name?', 'Bob');
