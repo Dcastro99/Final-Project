@@ -4,11 +4,12 @@
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+const movementButton = document.getElementById('nextRoomButton');
 
 ///saves game state.
 function save(){
   //save the last updated hintCooldown we should have when the next page loads
-  player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime
+  player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime;
   let gameSave = JSON.stringify(player);
   localStorage.setItem('player', gameSave);
 }
@@ -19,6 +20,7 @@ function load(){
   recieved = JSON.parse(recieved);
   return new Player(recieved);
 }
+
 
 /**
  * ## Player type
@@ -31,7 +33,7 @@ function Player(savedata){
   this.popups = [];
   if(!savedata) {
     ///first time setup
-    if(window.location.pathname != '/index.html') {
+    if(window.location.pathname !== '/index.html') {
       window.location.href = 'index.html';
       return; //this will run again on the correct site
     }
@@ -40,8 +42,8 @@ function Player(savedata){
   } else {
     //returning player
     this.name = savedata.name;
-    this.inventory = new Inventory(pojoInventory.items);
-    this.hintSystem = new HintSystem(savedata.hintCooldown)
+    this.inventory = new Inventory(savedata.items);
+    this.hintSystem = new HintSystem(savedata.hintCooldown);
   }
 }
 
@@ -68,7 +70,7 @@ function Inventory(pojoItems) {
     // items.push(new Items('laptop'));
     // items.push(new Items('keyboard'));
     // items.push(new Items('mouse'));
-    // items.push(new Items('flashlight'));
+    // this.items.push(new Items('flashlight'));
     // items.push(new Items('backback'));
     // items.push(new Items('textbooks'));
   }
@@ -78,15 +80,11 @@ function Inventory(pojoItems) {
     objectives.id = 'objectives';
 
     let a = document.createElement('a');
-    if (window.location.pathname==='/index.html'){
-      a.href = '/classroom.html';
+    a.href = '#';
 
-    } else {
-      a.href = '/index.html';
-    }
     let div = document.createElement('div');
     div.textContent = 'Nextroom';
-    div.id = 'nextRoomButton';
+    a.id = 'nextRoomButton';
     a.appendChild(div);
     tui.appendChild(a);
 
@@ -118,7 +116,7 @@ function Items(name, collected, page, x, y, eventCallback) {
       found.remove();
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
-    if(!collected && window.location.href != this.page) {
+    if(!collected && window.location.href !== this.page) {
       return;
     }
     let img = main.appendChild(document.createElement('img'));
@@ -129,7 +127,7 @@ function Items(name, collected, page, x, y, eventCallback) {
       //we don't have to check if querySelector did nothing because there should always be enough slots for items
       //let slot = document.querySelector('.itemslot:empty');
       //slot.appendChild(img);
-      return
+      return;
     }
     img.addEventListener('click', this.eventCallback);
     img.style.cssText = `position: absolute; left: ${x}; bottom: ${y}`;
@@ -176,7 +174,7 @@ function HintSystem(initialCooldown) {
     return;
   };
   if(initialCooldown) {
-    this.startCooldown(initialCooldown)
+    this.startCooldown(initialCooldown);
   }
 }
 
@@ -201,6 +199,7 @@ function Popup(renderFunction) {
   player.popups.push(this);
 }
 
+
 // laptop item event
 
 function laptopClick(event) {
@@ -209,5 +208,23 @@ function laptopClick(event) {
     alert ('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
   }
 }
+// flashlight item event
+
+function flashlightClick(event) {
+  let  itemClicked = event.target.alt;
+  if (itemClicked === 'flashlight') {
+    movementButton.className = 'clicks-allowed';
+    enableDoorButton();
+  }
+}
 
 
+function enableDoorButton() {
+  let a = document.querySelector('#nextRoomButton');
+  if (window.location.pathname==='/index.html'){
+    a.href = '/classroom.html';
+
+  } else {
+    a.href = '/index.html';
+  }
+}
