@@ -2,9 +2,9 @@
 * {
   box-sizing: border-box;
 }
-main{
-  max-width: 1500px;
-  height: 110px;
+#rooms{
+  max-width: max-content;
+  height: max-content;
 }
 
 /* main when dimmed */
@@ -61,13 +61,7 @@ div {
   padding: 4rem;
 }
 
-#nextRoomButton {
-  height: 5px;
-  border: 5px solid black;
-  border-width: 3px;
-  padding: 4rem;
-  text-align: center;
-}
+
 
 #hintButton{
   width: 175px;
@@ -93,6 +87,7 @@ div {
   min-height: 96px;
 }
 #inventory{
+
   margin-bottom: 5rem;
 }
 /* leader board CSS */
@@ -106,7 +101,6 @@ div {
   text-align: center;
   
 }
-
 #lbHead h1{
   font-family: 'Special Elite', cursive;
   font-size: 6rem;
@@ -162,4 +156,47 @@ footer{
   100% {
     opacity: 1;
   }
+/* about-us */
+
+ h2 {
+  font-size: 40px;
+  text-align: center;
+  border-style: solid;
+  background-color: blueviolet;
+  padding: 1rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
+
+h3 {
+  border-style: solid;
+  width: 70px;
+  height: 50px;
+  text-align: center;
+  position: relative;
+}
+
+header {
+  margin-bottom: 0;
+}
+
+ .aboutMe {
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+main > div {
+  display: flex;
+  width: 1700px;
+  margin: 6rem 0;
+  align-items: center;
+}
+
+div {
+  justify-content: space-between;
+}
+
+h4{
+  font-size: 1.5rem;
+  
 }
