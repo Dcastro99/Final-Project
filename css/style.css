@@ -89,3 +89,47 @@ div {
 #inventory{
   margin-bottom: 5rem;
 }
+/* leader board CSS */
+
+#lbHead {
+  height: 10rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  background-color: blueviolet;
+  border: .5rem solid black;
+  text-align: center;
+  
+}
+#lbHead h1{
+  font-family: 'Special Elite', cursive;
+  font-size: 6rem;
+}
+#lbMain{
+  height: 55rem;
+  display: block;
+  
+}
+#lbMain ul {
+  margin-left: 15rem;
+  margin-right: 15rem;
+  border: .2rem solid black;
+  height: 45rem;
+  overflow: auto;
+}
+#reset {
+  
+  text-align: center;
+}
+#reset a {
+  
+  padding: .3rem;
+  border: .5rem solid black;
+  text-decoration: none;
+  font-family: 'Special Elite', cursive;
+  font-size: 2rem;
+
+}
+
+footer{
+  text-align: center;
+}
