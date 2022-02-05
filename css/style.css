@@ -2,26 +2,134 @@
 * {
   box-sizing: border-box;
 }
+main{
+  max-width: 1500px;
+  height: 110px;
+}
 
 section {
+  width: 1560px;
   border: 1px solid black;
-  padding: 1rem;
+  border-width: 2px;
+  padding: 2rem;
 }
 
 .flex-vertical {
+  
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
+  margin: 3rem;
 }
+
+
 
 .flex-horizontal {
   display: flex;
   justify-content: space-between;
 }
 
-#bottom-ui > * {
-  width: max-content;
+
+#top-ui {
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  margin-bottom:4rem;
+}
+
+#bottom-ui {
+
+  align-items: flex-end;
+  position: relative;
+  margin-top:30rem;
 }
 div {
   height: max-content;
+}
+
+#objectives {
+  width: 175px;
+  border: 1px solid black;
+  border-width: 2px;
+  padding: 4rem;
+}
+
+#nextRoomButton {
+  height: 5px;
+  border: 5px solid black;
+  border-width: 3px;
+  padding: 4rem;
+  text-align: center;
+}
+
+#hintButton{
+  width: 175px;
+  height: 50px;
+  border-radius: 8px;
+
+}
+
+#itemDiv1{
+  padding: 0;
+  width: 30rem;
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between;
+}
+.itemslot > img{
+  width: 96px;
+  height: 96px;
+}
+
+.itemslot{
+  
+  min-height: 96px;
+}
+#inventory{
+  margin-bottom: 5rem;
+}
+/* leader board CSS */
+
+#lbHead {
+  height: 10rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  background-color: blueviolet;
+  border: .5rem solid black;
+  text-align: center;
+  
+}
+#lbHead h1{
+  font-family: 'Special Elite', cursive;
+  font-size: 6rem;
+}
+#lbMain{
+  height: 55rem;
+  display: block;
+  
+}
+#lbMain ul {
+  margin-left: 15rem;
+  margin-right: 15rem;
+  border: .2rem solid black;
+  height: 45rem;
+  overflow: auto;
+}
+#reset {
+  
+  text-align: center;
+}
+#reset a {
+  
+  padding: .3rem;
+  border: .5rem solid black;
+  text-decoration: none;
+  font-family: 'Special Elite', cursive;
+  font-size: 2rem;
+
+}
+
+footer{
+  text-align: center;
 }
