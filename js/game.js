@@ -23,6 +23,12 @@ function load(){
   return new Player(recieved);
 }
 
+/**
+ * ## Player type
+ *
+ * Player is the main object that holds the state of the game, and many references to other systems
+ * inside like Inventory and HintSystem. This is so saving can stringify a single object and just unpack it on loading.
+ */
 function Player(savedata){
   //should always be clear, who wants popups from last page?
   this.popups = [];
@@ -43,6 +49,12 @@ function Player(savedata){
   }
 }
 
+/**
+ * ## Inventory
+ *
+ * Inventory manages all Item types in the game. When the user enters the webpage for the first time
+ * Inventory will load all items in existence and set them up as they were before
+ */
 function Inventory(pojoItems) {
   ///List of Item types
   this.items = [];
@@ -65,12 +77,33 @@ function Inventory(pojoItems) {
     // items.push(new Items('textbooks'));
   }
   this.render = function() {
-    let ui = document.querySelector('#bottom-ui');
-    ui.appendChild(document.createElement('section'));
+    let tui = document.querySelector('#top-ui');
+    let objectives = tui.appendChild(document.createElement('section'));
+    objectives.id = 'objectives';
+
+    let a = document.createElement('a');
+    if (window.location.pathname==='/index.html'){
+      a.href = '/classroom.html';
+
+    } else {
+      a.href = '/index.html';
+    }
+    let div = document.createElement('div');
+    div.textContent = 'Nextroom';
+    div.id = 'nextRoomButton';
+    a.appendChild(div);
+    tui.appendChild(a);
+
+    let hintbtn = document.createElement('button');
+    hintbtn.innerHTML = 'Hint Button';
+    let hintButton = tui.appendChild(hintbtn);
+    hintButton.id = 'hintButton';
   };
   this.render();
 }
 
+/// Item type! They old the name, data the img tag needs, and location it needs to render.
+/// It also renders itself onto the page, but Inventory type decides when.
 function Items(name, collected, page, x, y) {
   this.name = name;
   this.collected = collected;
@@ -102,66 +135,35 @@ function Items(name, collected, page, x, y) {
   };
 }
 
-let logo = new Items('logo', '500px', '25rem');
-// let laptop = new Items('laptop');
-// let keyboard = new Items('keyboard');
-// let mouse = new Items('mouse');
-// let flashlight = new Items('flashlight');
-// let backback = new Items('backback');
-// let textBooks = new Items('textbooks');
-
-function Inventory(stringifiedItems) {
-  ///List of Item types
-  this.items = reinstantiateArray(stringifiedItems, Items);
-  this.render = function (){
-    // let bui = document.querySelector('#bottom-ui');
-    // bui.appendChild(document.createElement('section'));
-    let tui = document.querySelector('#top-ui');
-    let objectives = tui.appendChild(document.createElement('section'));
-    objectives.id = 'objectives';
-
-    let a = document.createElement('a');
-    if (window.location.pathname==='/index.html'){
-      a.href = '/classroom.html';
-
-    } else {
-      a.href = '/index.html';
-    }
-    let div = document.createElement('div');
-    div.textContent = 'Nextroom';
-    div.id = 'nextRoomButton';
-    a.appendChild(div);
-    tui.appendChild(a);
-
-    let hintbtn = document.createElement('button');
-    hintbtn.innerHTML = 'Hint Button';
-    let hintButton = tui.appendChild(hintbtn);
-    hintButton.id = 'hintButton';
-
-   
-  };
-
-  this.render();
-}
-
+/**
+ * ## HintSystem
+ *
+ * HintSystem manages all the hint-based functionality of the game. It renders the button for hints on the screen,
+ * keeps track of the cooldown for using it
+ */
 function HintSystem(initialCooldown) {
+  ///how much time between asking for hints.
   this.hintCooldown = SECONDS(60);
   ///current timer
   this.currentTimeout;
   ///when we started the cooldown
   this.hintStartTime;
+  ///Starts the cooldown and disables getting hints.
   this.startCooldown = function(override) {
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = new Date().now()
   };
+  ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function() {
     this.currentTimeout = undefined;
     //unlock button visually
   };
+  ///renders the button onto the page.
   this.renderHintButton = function() {
     //this needs to include an event listener that calls onHintRequested
     return;
   };
+  ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function(event) {
     if(this.currentTimeout) {
       console.log('Hint Rejected, On Cooldown!');
@@ -181,6 +183,13 @@ function examplePopup(section) {
   p.textContent = "Woah, we're halfway there. Woooah hoah! Livin' on a prayer!"
 }
 
+/**
+ * ## Popup
+ *
+ * Popups immediately create html and dim the screen when created and dim the rest of the screen until
+ * dismissed, to where they clean themselves up. The inside of the Popup can really be anything rendered
+ * via `renderfunction`.
+ */
 function Popup(renderFunction) {
   this.renderFunction = renderFunction;
   this.renderListen = function(){
