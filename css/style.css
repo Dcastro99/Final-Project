@@ -2,30 +2,93 @@
 * {
   box-sizing: border-box;
 }
+main{
+  max-width: 1500px;
+  height: 110px;
+}
 
 section {
+  width: 1560px;
   border: 1px solid black;
-  padding: 1rem;
+  border-width: 2px;
+  padding: 2rem;
 }
 
 .flex-vertical {
+  
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
+  margin: 3rem;
 }
+
+
 
 .flex-horizontal {
   display: flex;
   justify-content: space-between;
 }
 
-#bottom-ui > * {
-  width: max-content;
+
+#top-ui {
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  margin-bottom:4rem;
+}
+
+#bottom-ui {
+
+  align-items: flex-end;
+  position: relative;
+  margin-top:30rem;
 }
 div {
   height: max-content;
 }
 
+#objectives {
+  width: 175px;
+  border: 1px solid black;
+  border-width: 2px;
+  padding: 4rem;
+}
+
+#nextRoomButton {
+  height: 5px;
+  border: 5px solid black;
+  border-width: 3px;
+  padding: 4rem;
+  text-align: center;
+}
+
+#hintButton{
+  width: 175px;
+  height: 50px;
+  border-radius: 8px;
+
+}
+
+#itemDiv1{
+  padding: 0;
+  width: 30rem;
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between;
+}
+.itemslot > img{
+  width: 96px;
+  height: 96px;
+}
+
+.itemslot{
+  
+  min-height: 96px;
+}
+#inventory{
+  margin-bottom: 5rem;
+}
 /* leader board CSS */
 
 #lbHead {
