@@ -7,7 +7,8 @@ const player = load();
 
 ///saves game state.
 function save(){
-  player.hintCooldown = player.hintSystem.
+  //save the last updated hintCooldown we should have when the next page loads
+  player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime
   let gameSave = JSON.stringify(player);
   localStorage.setItem('player', gameSave);
 }
@@ -100,9 +101,13 @@ function Items(name, collected, page, x, y) {
 
 function HintSystem(initialCooldown) {
   this.hintCooldown = SECONDS(60);
-  this.currentTimeout = undefined;
+  ///current timer
+  this.currentTimeout;
+  ///when we started the cooldown
+  this.hintStartTime;
   this.startCooldown = function(override) {
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
+    this.hintStartTime = new Date().now()
   };
   this.onCooldownFinished = function() {
     this.currentTimeout = undefined;
