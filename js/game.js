@@ -31,7 +31,7 @@ function Player(savedata) {
   this.popups = [];
   if (!savedata) {
     ///first time setup
-    if (window.location.pathname != '/index.html') {
+    if (window.location.pathname !== '/index.html') {
       window.location.href = 'index.html';
       return; //this will run again on the correct site
     }
@@ -78,12 +78,7 @@ function Inventory(pojoItems) {
     objectives.id = 'objectives';
 
     let a = document.createElement('a');
-    if (window.location.pathname === '/index.html') {
-      a.href = '/classroom.html';
-
-    } else {
-      a.href = '/index.html';
-    }
+    a.href = '#';
     let div = document.createElement('div');
     div.textContent = 'Nextroom';
     div.id = 'nextRoomButton';
