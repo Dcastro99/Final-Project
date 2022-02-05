@@ -16,7 +16,10 @@ function save(){
 ///loads game state, returning a Player
 function load(){
   let recieved = localStorage.getItem('player');
-  recieved = JSON.parse(recieved);
+  if(recieved) {
+    console.log(recieved)
+    recieved = JSON.parse(recieved);
+  }
   return new Player(recieved);
 }
 
@@ -31,10 +34,11 @@ function Player(savedata){
     }
     this.name = prompt('What is your name?', 'Bob');
     this.inventory = new Inventory();
+    this.hintSystem = new HintSystem()
   } else {
     //returning player
     this.name = savedata.name;
-    this.inventory = new Inventory(pojoInventory.items);
+    this.inventory = new Inventory(savedata.inventory.items);
     this.hintSystem = new HintSystem(savedata.hintCooldown)
   }
 }
@@ -172,17 +176,24 @@ function HintSystem(initialCooldown) {
   }
 }
 
+function examplePopup(section) {
+  let p = section.appendChild(document.createElement('p'))
+  p.textContent = "Woah, we're halfway there. Woooah hoah! Livin' on a prayer!"
+}
 
 function Popup(renderFunction) {
-  this.dismissed = false;
   this.renderFunction = renderFunction;
   this.renderListen = function(){
-    document.appendChild(document.createElement('section'));
-    this.renderFunction();
+    this.section = main.appendChild(document.createElement('section'));
+    this.section.classList.add('popup')
+    this.renderFunction(this.section);
+    main.addEventListener('click', this.onDismiss)
   };
   this.onDismiss = function(event){
-    this.dismissed = true;
-    popups.filter(popup => !popup.dismissed);
+    main.removeEventListener('click', this.onDismiss)
+    this.section.remove()
+    this.section = undefined
+    popups.filter(popup => !popup.section);
   };
   player.popups.push(this);
 }

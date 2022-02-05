@@ -133,3 +133,18 @@ div {
 footer{
   text-align: center;
 }
+
+.popup {
+  animation-name: landing;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+@keyframes landing {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
