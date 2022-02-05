@@ -133,3 +133,48 @@ div {
 footer{
   text-align: center;
 }
+
+/* about-us */
+
+ h2 {
+  font-size: 40px;
+  text-align: center;
+  border-style: solid;
+  background-color: blueviolet;
+  padding: 1rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+}
+
+h3 {
+  border-style: solid;
+  width: 70px;
+  height: 50px;
+  text-align: center;
+  position: relative;
+}
+
+header {
+  margin-bottom: 0;
+}
+
+ p {
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+main > div {
+  display: flex;
+  width: 1700px;
+  margin: 6rem 0;
+  align-items: center;
+}
+
+div {
+  justify-content: space-between;
+}
+
+h4{
+  font-size: 1.5rem;
+  
+}
