@@ -4,6 +4,8 @@
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+//save after loading player to lock in new player data on first visits
+save()
 
 ///saves game state.
 function save(){
@@ -207,3 +209,6 @@ function Popup(renderFunction) {
   player.popups.push(this);
 }
 
+function test() {
+  new Popup(examplePopup)
+}
