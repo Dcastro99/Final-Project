@@ -78,7 +78,7 @@ function Inventory(pojoItems) {
     // items.push(new Items('laptop'));
     // items.push(new Items('keyboard'));
     // items.push(new Items('mouse'));
-    // this.items.push(new Items('flashlight'));
+    this.items.push(new Items('flashlight',false, '/index.html', '30px', '10rem', flashlightClick));
     // items.push(new Items('backback'));
     // items.push(new Items('textbooks'));
     this.items.forEach(item => item.render());
@@ -246,6 +246,7 @@ function flashlightClick(event) {
   if (itemClicked === 'flashlight') {
     movementButton.className = 'clicks-allowed';
     enableDoorButton();
+    let item = player.inventory.items.filter(possible => possible.name === 'flashlight')[0];
     player.inventory.collect(item);
   }
 }
