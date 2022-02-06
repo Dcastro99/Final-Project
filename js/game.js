@@ -214,7 +214,6 @@ function Popup(renderFunction) {
     popup.section.remove();
     popup.section = undefined;
     player.popups.shift();
-    player.popups.filter(popup => !popup.section);
   };
   player.popups.push(this);
   this.renderListen();
