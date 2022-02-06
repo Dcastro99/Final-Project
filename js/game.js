@@ -242,8 +242,7 @@ function test() {
 function laptopClick(event) {
   let itemClicked = event.target.alt;
   if (itemClicked === 'laptop') {
-    new Popup();
-    alert();
+    new Popup(laptopPopup);
   }
   let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
   player.inventory.collect(item);
