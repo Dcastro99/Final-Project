@@ -123,11 +123,9 @@ function Items(name, collected, page, x, y, eventCallback) {
   this.y = y;
   this.eventCallback = eventCallback;
   this.render = function () {
-    console.log('rendering', this.name);
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
     if (found) {
-      console.log('found', this.name);
       found.removeEventListener('click', this.eventCallback);
       found.remove();
     }
@@ -135,7 +133,6 @@ function Items(name, collected, page, x, y, eventCallback) {
 
 
     if(!collected && window.location.pathname !== this.page) {
-      console.log('href', window.location.pathname, '!==', this.page);
       return;
     }
     let img = main.appendChild(document.createElement('img'));
@@ -185,10 +182,8 @@ function HintSystem(initialCooldown) {
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function (event) {
     if (this.currentTimeout) {
-      console.log('Hint Rejected, On Cooldown!');
       return;
     }
-    console.log('Hint Accepted, Starting Cooldown...');
     this.startCooldown();
     return;
   };
