@@ -74,7 +74,7 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, '/index.html', '30px', '10rem', laptopClick));
+    this.items.push(new Items('logo', false, '/index.html', '30px', '10rem', laptopClick, 'this is a hint for logo!'));
     // items.push(new Items('laptop'));
     // items.push(new Items('keyboard'));
     // items.push(new Items('mouse'));
@@ -113,7 +113,7 @@ function Inventory(pojoItems) {
 
 /// Item type! They old the name, data the img tag needs, and location it needs to render.
 /// It also renders itself onto the page, but Inventory type decides when.
-function Items(name, collected, page, x, y, eventCallback) {
+function Items(name, collected, page, x, y, eventCallback, hint) {
 
   this.name = name;
   this.collected = collected;
@@ -122,6 +122,7 @@ function Items(name, collected, page, x, y, eventCallback) {
   this.x = x;
   this.y = y;
   this.eventCallback = eventCallback;
+  this.hint = hint;
   this.render = function () {
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
@@ -185,7 +186,14 @@ function HintSystem(initialCooldown) {
       return;
     }
     this.startCooldown();
-    return;
+    //list of all items it makes sense to hint at
+    let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
+    //hinted at item
+    let hintedAt = possibleItemsToHint[Math.random() * possibleItemsToHint.length];
+    //paragraph the hint will go into
+    let hintP = document.querySelector('#hint');
+    hintP.textContent = hintedAt.hint;
+    player.inventory.collected;
   };
 
   if(initialCooldown) {
@@ -193,9 +201,9 @@ function HintSystem(initialCooldown) {
   }
 }
 
-function examplePopup(section) {
+function laptopPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'Woah, we\'re halfway there. Woooah hoah! Livin\' on a prayer!';
+  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!';
 }
 
 /**
@@ -234,7 +242,8 @@ function test() {
 function laptopClick(event) {
   let itemClicked = event.target.alt;
   if (itemClicked === 'laptop') {
-    alert('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
+    new Popup();
+    alert();
   }
   let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
   player.inventory.collect(item);
@@ -255,7 +264,6 @@ function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
   if (window.location.pathname==='/index.html'){
     a.href = '/classroom.html';
-
   } else {
     a.href = '/index.html';
   }
