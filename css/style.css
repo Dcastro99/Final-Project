@@ -49,7 +49,8 @@ section {
 }
 
 #bottom-ui {
-
+  z-index: 1;
+  background-color: white;
   align-items: flex-end;
   position: relative;
   margin-top:30rem;
@@ -162,7 +163,6 @@ footer{
     opacity: 1;
   }
 }
-/* about-us */
 
 /* about-us */
 
