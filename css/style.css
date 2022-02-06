@@ -2,6 +2,10 @@
 * {
   box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+}
 #rooms{
   max-width: max-content;
   height: max-content;
@@ -25,7 +29,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 3rem;
+  padding: 3rem;
 }
 
 
