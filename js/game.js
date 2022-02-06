@@ -69,7 +69,7 @@ function Inventory(pojoItems) {
       item.render();
       this.items.push(item);
       if(item.collected) {
-        this.collected.push(item)
+        this.collected.push(item);
       }
     }
   } else {
@@ -85,10 +85,10 @@ function Inventory(pojoItems) {
   }
   ///Adds an item from the world to the players inventory.
   this.collect = function(item) {
-    item.collected = true
-    this.collected.push(this.collected)
-    item.render()
-  }
+    item.collected = true;
+    this.collected.push(this.collected);
+    item.render();
+  };
   this.render = function () {
     let tui = document.querySelector('#top-ui');
     let objectives = tui.appendChild(document.createElement('section'));
@@ -123,11 +123,11 @@ function Items(name, collected, page, x, y, eventCallback) {
   this.y = y;
   this.eventCallback = eventCallback;
   this.render = function () {
-    console.log("rendering", this.name)
+    console.log('rendering', this.name);
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
     if (found) {
-      console.log("found", this.name)
+      console.log('found', this.name);
       found.removeEventListener('click', this.eventCallback);
       found.remove();
     }
@@ -135,7 +135,7 @@ function Items(name, collected, page, x, y, eventCallback) {
 
 
     if(!collected && window.location.pathname !== this.page) {
-      console.log("href", window.location.pathname, '!==', this.page)
+      console.log('href', window.location.pathname, '!==', this.page);
       return;
     }
     let img = main.appendChild(document.createElement('img'));
