@@ -68,16 +68,26 @@ function Inventory(pojoItems) {
       let item = new Items(pojoItem.name, pojoItem.collected, pojoItem.page, pojoItem.x, pojoItem.y);
       item.render();
       this.items.push(item);
+      if(item.collected) {
+        this.collected.push(item)
+      }
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, 'index.html', '30px', '5rem', laptopClick));
+    this.items.push(new Items('logo', false, '/index.html', '30px', '10rem', laptopClick));
     // items.push(new Items('laptop'));
     // items.push(new Items('keyboard'));
     // items.push(new Items('mouse'));
     // this.items.push(new Items('flashlight'));
     // items.push(new Items('backback'));
     // items.push(new Items('textbooks'));
+    this.items.forEach(item => item.render());
+  }
+  ///Adds an item from the world to the players inventory.
+  this.collect = function(item) {
+    item.collected = true
+    this.collected.push(this.collected)
+    item.render()
   }
   this.render = function () {
     let tui = document.querySelector('#top-ui');
@@ -113,17 +123,19 @@ function Items(name, collected, page, x, y, eventCallback) {
   this.y = y;
   this.eventCallback = eventCallback;
   this.render = function () {
+    console.log("rendering", this.name)
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
     if (found) {
+      console.log("found", this.name)
       found.removeEventListener('click', this.eventCallback);
       found.remove();
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
 
 
-    if(!collected && window.location.href !== this.page) {
-
+    if(!collected && window.location.pathname !== this.page) {
+      console.log("href", window.location.pathname, '!==', this.page)
       return;
     }
     let img = main.appendChild(document.createElement('img'));
@@ -131,9 +143,9 @@ function Items(name, collected, page, x, y, eventCallback) {
     img.alt = this.name;
     img.id = this.name;
     if (collected) {
-      //we don't have to check if querySelector did nothing because there should always be enough slots for items
-      //let slot = document.querySelector('.itemslot:empty');
-      //slot.appendChild(img);
+      // we don't have to check if querySelector did nothing because there should always be enough slots for items
+      let slot = document.querySelector('.itemslot:empty');
+      slot.appendChild(img);
       return;
     }
     img.addEventListener('click', this.eventCallback);
@@ -229,9 +241,8 @@ function laptopClick(event) {
   if (itemClicked === 'laptop') {
     alert('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
   }
-  player.inventory.collected.push();
   let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
-  item.render();
+  player.inventory.collect(item);
 }
 // flashlight item event
 
@@ -240,6 +251,7 @@ function flashlightClick(event) {
   if (itemClicked === 'flashlight') {
     movementButton.className = 'clicks-allowed';
     enableDoorButton();
+    player.inventory.collect(item);
   }
 }
 
