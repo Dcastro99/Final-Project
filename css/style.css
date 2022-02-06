@@ -165,9 +165,10 @@ footer{
     opacity: 1;
   }
 }
+
 /* about-us */
 
- h2 {
+h2 {
   font-size: 40px;
   text-align: center;
   border-style: solid;
@@ -175,6 +176,10 @@ footer{
   padding: 1rem;
   margin-left: 6rem;
   margin-right: 6rem;
+}
+h3:hover {
+  color:black;
+  border-style: solid;
 }
 
 h3 {
@@ -205,5 +210,4 @@ header {
 
 h4{
   font-size: 1.5rem;
-  
 }
