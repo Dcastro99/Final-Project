@@ -7,6 +7,12 @@
   height: max-content;
 }
 
+/* main when dimmed */
+.dimmed {
+  opacity: 0.7;
+  background-color: black;
+}
+
 section {
   width: 1560px;
   border: 1px solid black;
@@ -129,6 +135,28 @@ footer{
   text-align: center;
 }
 
+.popup {
+  border: 1px solid black;
+  opacity: 1;
+  background-color: white;
+  width: 40%;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: landing;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+@keyframes landing {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 /* about-us */
 
  h2 {

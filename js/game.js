@@ -4,12 +4,14 @@
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+//save after loading player to lock in new player data on first visits
+save();
 const movementButton = document.getElementById('nextRoomButton');
 
 ///saves game state.
 function save() {
   //save the last updated hintCooldown we should have when the next page loads
-  player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime;
+  player.hintCooldown = Date.now() - player.hintSystem.hintStartTime;
   let gameSave = JSON.stringify(player);
   localStorage.setItem('player', gameSave);
 }
@@ -17,7 +19,9 @@ function save() {
 ///loads game state, returning a Player
 function load() {
   let recieved = localStorage.getItem('player');
-  recieved = JSON.parse(recieved);
+  if(recieved) {
+    recieved = JSON.parse(recieved);
+  }
   return new Player(recieved);
 }
 
@@ -39,10 +43,11 @@ function Player(savedata) {
     }
     this.name = prompt('What is your name?', 'Bob');
     this.inventory = new Inventory();
+    this.hintSystem = new HintSystem();
   } else {
     //returning player
     this.name = savedata.name;
-    this.inventory = new Inventory(savedata.items);
+    this.inventory = new Inventory(savedata.inventory.items);
     this.hintSystem = new HintSystem(savedata.hintCooldown);
   }
 }
@@ -153,7 +158,7 @@ function HintSystem(initialCooldown) {
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
-    this.hintStartTime = new Date().now()
+    this.hintStartTime = Date.now();
   };
   ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function () {
@@ -178,8 +183,12 @@ function HintSystem(initialCooldown) {
 
   if(initialCooldown) {
     this.startCooldown(initialCooldown);
-
   }
+}
+
+function examplePopup(section) {
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'Woah, we\'re halfway there. Woooah hoah! Livin\' on a prayer!';
 }
 
 /**
@@ -190,20 +199,29 @@ function HintSystem(initialCooldown) {
  * via `renderfunction`.
  */
 function Popup(renderFunction) {
-  this.dismissed = false;
   this.renderFunction = renderFunction;
-  this.renderListen = function () {
-    document.appendChild(document.createElement('section'));
-    this.renderFunction();
+  this.renderListen = function(){
+    main.classList.add('dimmed');
+    this.section = main.appendChild(document.createElement('section'));
+    this.section.classList.add('popup');
+    this.renderFunction(this.section);
+    main.addEventListener('click', this.onDismiss);
   };
-  this.onDismiss = function (event) {
-    this.dismissed = true;
-    popups.filter(popup => !popup.dismissed);
+  this.onDismiss = function(){
+    main.classList.remove('dimmed');
+    let popup = player.popups[0];
+    main.removeEventListener('click', popup.onDismiss);
+    popup.section.remove();
+    popup.section = undefined;
+    player.popups.shift();
   };
   player.popups.push(this);
+  this.renderListen();
 }
 
-
+function test() {
+  new Popup(examplePopup);
+}
 // laptop item event
 
 function laptopClick(event) {
@@ -218,7 +236,7 @@ function laptopClick(event) {
 // flashlight item event
 
 function flashlightClick(event) {
-  let  itemClicked = event.target.alt;
+  let itemClicked = event.target.alt;
   if (itemClicked === 'flashlight') {
     movementButton.className = 'clicks-allowed';
     enableDoorButton();
