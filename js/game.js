@@ -4,12 +4,14 @@
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+//save after loading player to lock in new player data on first visits
+save();
 const movementButton = document.getElementById('nextRoomButton');
 
 ///saves game state.
 function save() {
   //save the last updated hintCooldown we should have when the next page loads
-  player.hintCooldown = new Date().now() - player.hintSystem.hintStartTime;
+  player.hintCooldown = Date.now() - player.hintSystem.hintStartTime;
   let gameSave = JSON.stringify(player);
   localStorage.setItem('player', gameSave);
 }
@@ -17,7 +19,9 @@ function save() {
 ///loads game state, returning a Player
 function load() {
   let recieved = localStorage.getItem('player');
-  recieved = JSON.parse(recieved);
+  if(recieved) {
+    recieved = JSON.parse(recieved);
+  }
   return new Player(recieved);
 }
 
@@ -39,10 +43,11 @@ function Player(savedata) {
     }
     this.name = prompt('What is your name?', 'Bob');
     this.inventory = new Inventory();
+    this.hintSystem = new HintSystem();
   } else {
     //returning player
     this.name = savedata.name;
-    this.inventory = new Inventory(savedata.items);
+    this.inventory = new Inventory(savedata.inventory.items);
     this.hintSystem = new HintSystem(savedata.hintCooldown);
   }
 }
@@ -63,6 +68,9 @@ function Inventory(pojoItems) {
       let item = new Items(pojoItem.name, pojoItem.collected, pojoItem.page, pojoItem.x, pojoItem.y);
       item.render();
       this.items.push(item);
+      if(item.collected) {
+        this.collected.push(item);
+      }
     }
   } else {
     //first time setup, creates all items with their default vals
@@ -73,7 +81,14 @@ function Inventory(pojoItems) {
     this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick));
     this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', laptopClick));
     this.items.push(new Items('textbooks', false, 'classroom.html', '555px', '5rem', genericClick));
+
   }
+  ///Adds an item from the world to the players inventory.
+  this.collect = function(item) {
+    item.collected = true;
+    this.collected.push(this.collected);
+    item.render();
+  };
   this.render = function () {
     let tui = document.querySelector('#top-ui');
     let objectives = tui.appendChild(document.createElement('section'));
@@ -116,9 +131,8 @@ function Items(name, collected, page, x, y, eventCallback) {
       found.remove();
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
-
-
     if (!collected && window.location.href !== this.page) {
+
       return;
     }
     let img = main.appendChild(document.createElement('img'));
@@ -126,9 +140,9 @@ function Items(name, collected, page, x, y, eventCallback) {
     img.alt = this.name;
     img.id = this.name;
     if (collected) {
-      //we don't have to check if querySelector did nothing because there should always be enough slots for items
-      //let slot = document.querySelector('.itemslot:empty');
-      //slot.appendChild(img);
+      // we don't have to check if querySelector did nothing because there should always be enough slots for items
+      let slot = document.querySelector('.itemslot:empty');
+      slot.appendChild(img);
       return;
     }
     img.addEventListener('click', this.eventCallback);
@@ -153,7 +167,7 @@ function HintSystem(initialCooldown) {
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
-    this.hintStartTime = new Date().now()
+    this.hintStartTime = Date.now();
   };
   ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function () {
@@ -168,17 +182,19 @@ function HintSystem(initialCooldown) {
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function (event) {
     if (this.currentTimeout) {
-      console.log('Hint Rejected, On Cooldown!');
       return;
     }
-    console.log('Hint Accepted, Starting Cooldown...');
     this.startCooldown();
     return;
   };
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
-
   }
+}
+
+function examplePopup(section) {
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'Woah, we\'re halfway there. Woooah hoah! Livin\' on a prayer!';
 }
 
 /**
@@ -189,20 +205,29 @@ function HintSystem(initialCooldown) {
  * via `renderfunction`.
  */
 function Popup(renderFunction) {
-  this.dismissed = false;
   this.renderFunction = renderFunction;
-  this.renderListen = function () {
-    document.appendChild(document.createElement('section'));
-    this.renderFunction();
+  this.renderListen = function(){
+    main.classList.add('dimmed');
+    this.section = main.appendChild(document.createElement('section'));
+    this.section.classList.add('popup');
+    this.renderFunction(this.section);
+    main.addEventListener('click', this.onDismiss);
   };
-  this.onDismiss = function (event) {
-    this.dismissed = true;
-    popups.filter(popup => !popup.dismissed);
+  this.onDismiss = function(){
+    main.classList.remove('dimmed');
+    let popup = player.popups[0];
+    main.removeEventListener('click', popup.onDismiss);
+    popup.section.remove();
+    popup.section = undefined;
+    player.popups.shift();
   };
   player.popups.push(this);
+  this.renderListen();
 }
 
-
+function test() {
+  new Popup(examplePopup);
+}
 // laptop item event
 
 function laptopClick(event) {
@@ -210,9 +235,8 @@ function laptopClick(event) {
   if (itemClicked === 'laptop') {
     alert('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
   }
-  player.inventory.collected.push();
   let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
-  item.render();
+  player.inventory.collect(item);
 }
 // flashlight item event
 
@@ -221,6 +245,7 @@ function flashlightClick(event) {
   if (itemClicked === 'flashlight') {
     movementButton.className = 'clicks-allowed';
     enableDoorButton();
+    player.inventory.collect(item);
   }
 }
 
