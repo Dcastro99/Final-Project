@@ -74,14 +74,15 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, '/index.html', '30px', '10rem', laptopClick));
-    // items.push(new Items('laptop'));
-    // items.push(new Items('keyboard'));
-    // items.push(new Items('mouse'));
-    // this.items.push(new Items('flashlight'));
-    // items.push(new Items('backback'));
-    // items.push(new Items('textbooks'));
     this.items.forEach(item => item.render());
+    this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', genericClick));
+    this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', genericClick));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', genericClick));
+    this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', genericClick));
+    this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick));
+    this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', genericClick));
+    this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', genericClick));
+
   }
   ///Adds an item from the world to the players inventory.
   this.collect = function(item) {
@@ -109,8 +110,9 @@ function Inventory(pojoItems) {
   };
   this.render();
 }
-
-
+function genericClick(){
+  return;
+}
 /// Item type! They old the name, data the img tag needs, and location it needs to render.
 /// It also renders itself onto the page, but Inventory type decides when.
 function Items(name, collected, page, x, y, eventCallback) {
@@ -132,7 +134,7 @@ function Items(name, collected, page, x, y, eventCallback) {
     //haven't collected this, and not on this page means it shouldn't exist anywhere
 
 
-    if(!collected && window.location.pathname !== this.page) {
+    if (!collected && window.location.href !== this.page) {
       return;
     }
     let img = main.appendChild(document.createElement('img'));
@@ -187,8 +189,7 @@ function HintSystem(initialCooldown) {
     this.startCooldown();
     return;
   };
-
-  if(initialCooldown) {
+  if (initialCooldown) {
     this.startCooldown(initialCooldown);
   }
 }
@@ -253,7 +254,7 @@ function flashlightClick(event) {
 
 function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
-  if (window.location.pathname==='/index.html'){
+  if (window.location.pathname === '/index.html') {
     a.href = '/classroom.html';
 
   } else {
