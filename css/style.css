@@ -125,6 +125,7 @@ section {
   
 }
 #lbHead h1{
+  margin-top: 2rem;
   font-family: 'Special Elite', cursive;
   font-size: 6rem;
 }
@@ -134,14 +135,15 @@ section {
   
 }
 #lbMain ul {
+  margin-top: 2rem;
   margin-left: 15rem;
   margin-right: 15rem;
   border: .2rem solid black;
-  height: 45rem;
+  height: 40rem;
   overflow: auto;
 }
 #reset {
-  
+  margin-top: 3rem;
   text-align: center;
 }
 #reset a {
@@ -181,6 +183,7 @@ footer{
     opacity: 1;
   }
 }
+
 /* about-us */
 
  h2 {
@@ -192,6 +195,10 @@ footer{
     margin-left: 6rem;
     margin-right: 6rem;
  }
+}
+h3:hover {
+  color:black;
+  border-style: solid;
 }
 
 h3 {
@@ -222,5 +229,4 @@ header {
 
 h4 {
   font-size: 1.5rem;
-  
 }
