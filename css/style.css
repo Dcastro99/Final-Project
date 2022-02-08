@@ -171,10 +171,13 @@ h2 {
   text-align: center;
   border-style: solid;
   background-color: blueviolet;
-  padding: 1rem;
-  margin-left: 6rem;
-  margin-right: 6rem;
+  padding: 3rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-bottom: 0;
+  margin-top: 1.5rem;
 }
+
 h3:hover {
   color:black;
   border-style: solid;
@@ -183,9 +186,9 @@ h3:hover {
 h3 {
   border-style: solid;
   width: 70px;
-  height: 50px;
   text-align: center;
   position: relative;
+
 }
 
 header {
@@ -193,19 +196,26 @@ header {
 }
 
  .aboutMe {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-style: italic;
+  margin-left: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .intro {
   display: flex;
-  width: 1700px;
   margin: 6rem auto;
   align-items: center;
   justify-content: space-between;
-  
+  padding-top: 0;
+  padding-right: 1rem;
+ 
 }
 
 h4{
   font-size: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
+
