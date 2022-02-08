@@ -1,12 +1,36 @@
 'use strict';
 
+///global obj of all item functions which they can point to (methods do not save across local state stringification)
+const funcName2Function = {
+  'genericClick': genericClick,
+  'laptopClick': laptopClick,
+  'flashlightClick': flashlightClick,
+};
+///player init populates this list with list duos (function, item ref)
+///after player has inited and loaded, reTrigger events will get everything in this list...
+///...and essentially run a silent event version of re-picking up the item
+let queuedRetriggers = [];
+
 //entry to the dom
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
 //save after loading player to lock in new player data on first visits
 save();
+///movement button - this has to occur AFTER player inits (inventory renders button) but BEFORE events (that touch it)
 const movementButton = document.getElementById('nextRoomButton');
+retriggerEvents();
+//and then post player init calls
+function retriggerEvents() {
+  //look away, lest you lose your mind entirely.
+  for(let duo of queuedRetriggers) {
+    let retriggerEvent = duo[0];
+    let item = duo[1];
+    retriggerEvent({
+      target: {alt: item.name}
+    }, true);
+  }
+}
 
 ///saves game state.
 function save() {
@@ -65,29 +89,32 @@ function Inventory(pojoItems) {
   this.collected = [];
   if (pojoItems) {
     for (let pojoItem of pojoItems) {
-      let item = new Items(pojoItem.name, pojoItem.collected, pojoItem.page, pojoItem.x, pojoItem.y);
-      item.render();
+      let item = new Items(pojoItem.name, pojoItem.collected, pojoItem.page, pojoItem.x, pojoItem.y, pojoItem.eventName, pojoItem.hint);
       this.items.push(item);
       if(item.collected) {
+        let retriggerEvent = funcName2Function[item.eventName];
+        queuedRetriggers.push([retriggerEvent, item]);
         this.collected.push(item);
       }
+      item.render();
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', genericClick, 'this is a hint for logo!'));
-    this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', genericClick, 'this is a hint for laptops!'));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', genericClick, 'this is a hint for keyboard!'));
-    this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', genericClick, 'this is a hint for mouse!'));
-    this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick, 'this is a hint for flashlight!'));
-    this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', genericClick, 'this is a hint for backpack!'));
-    this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', genericClick, 'this is a hint for textbooks!'));
+    this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
+    this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', 'laptopClick', 'this is a hint for laptops!'));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', 'genericClick', 'this is a hint for keyboard!'));
+    this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', 'genericClick', 'this is a hint for mouse!'));
+    this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', 'flashlightClick', 'this is a hint for flashlight!'));
+    this.items.push(new Items('backpack', false, '/index.html', '333px', '5rem', 'genericClick', 'this is a hint for backpack!'));
+    this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', 'genericClick', 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
   this.collect = function(item) {
     item.collected = true;
-    this.collected.push(this.collected);
+    this.collected.push(item);
     item.render();
+    save();
   };
   this.render = function () {
     let tui = document.querySelector('#top-ui');
@@ -109,12 +136,10 @@ function Inventory(pojoItems) {
   };
   this.render();
 }
-function genericClick(){
-  return;
-}
+
 /// Item type! They old the name, data the img tag needs, and location it needs to render.
 /// It also renders itself onto the page, but Inventory type decides when.
-function Items(name, collected, page, x, y, eventCallback, hint) {
+function Items(name, collected, page, x, y, eventName, hint) {
 
   this.name = name;
   this.collected = collected;
@@ -122,32 +147,30 @@ function Items(name, collected, page, x, y, eventCallback, hint) {
   this.src = `images/${name}.png`;
   this.x = x;
   this.y = y;
-  this.eventCallback = eventCallback;
+  this.eventName = eventName;
   this.hint = hint;
   this.render = function () {
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
     if (found) {
-      found.removeEventListener('click', this.eventCallback);
+      found.removeEventListener('click', funcName2Function[this.eventName]);
       found.remove();
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
-
-
-    if (!collected && window.location.href !== this.page) {
+    if (!this.collected && window.location.pathname !== this.page) {
       return;
     }
     let img = main.appendChild(document.createElement('img'));
     img.src = this.src;
     img.alt = this.name;
     img.id = this.name;
-    if (collected) {
+    if (this.collected) {
       // we don't have to check if querySelector did nothing because there should always be enough slots for items
       let slot = document.querySelector('.itemslot:empty');
       slot.appendChild(img);
       return;
     }
-    img.addEventListener('click', this.eventCallback);
+    img.addEventListener('click', funcName2Function[this.eventName]);
     img.style.cssText = `position: absolute; left: ${x}; bottom: ${y}`;
   };
 }
@@ -201,11 +224,6 @@ function HintSystem(initialCooldown) {
   }
 }
 
-function laptopPopup(section) {
-  let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!';
-}
-
 /**
  * ## Popup
  *
@@ -235,13 +253,34 @@ function Popup(renderFunction) {
 }
 
 function test() {
-  new Popup(examplePopup);
+  new Popup(laptopPopup);
 }
+
+function laptopPopup(section) {
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!';
+}
+
+function flashlightPopup(section) {
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'With this, you\'ll be able to enter the next room.';
+}
+
+function genericClick(event, silent){
+  if (!event.target.alt) {
+    return;
+  }
+  let item = player.inventory.items.filter(possible => possible.name === event.target.alt)[0];
+  player.inventory.collect(item);
+}
+
 // laptop item event
 
-function laptopClick(event) {
-  let itemClicked = event.target.alt;
-  if (itemClicked === 'laptop') {
+function laptopClick(event, silent) {
+  if (!event.target.alt) {
+    return;
+  }
+  if (!silent) {
     new Popup(laptopPopup);
   }
   let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
@@ -249,14 +288,17 @@ function laptopClick(event) {
 }
 // flashlight item event
 
-function flashlightClick(event) {
-  let itemClicked = event.target.alt;
-  if (itemClicked === 'flashlight') {
-    movementButton.className = 'clicks-allowed';
-    enableDoorButton();
-    let item = player.inventory.items.filter(possible => possible.name === 'flashlight')[0];
-    player.inventory.collect(item);
+function flashlightClick(event, silent) {
+  if (!event.target.alt) {
+    return;
   }
+  if (!silent) {
+    new Popup(flashlightPopup);
+  }
+  movementButton.className = 'clicks-allowed';
+  enableDoorButton();
+  let item = player.inventory.items.filter(possible => possible.name === 'flashlight')[0];
+  player.inventory.collect(item);
 }
 
 
