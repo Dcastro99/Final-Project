@@ -6,7 +6,9 @@ const funcName2Function = {
   'laptopClick': laptopClick,
   'flashlightClick': flashlightClick,
 };
-///
+///player init populates this list with list duos (function, item ref)
+///after player has inited and loaded, reTrigger events will get everything in this list...
+///...and essentially run a silent event version of re-picking up the item
 let queuedRetriggers = [];
 
 //entry to the dom
@@ -20,7 +22,7 @@ const movementButton = document.getElementById('nextRoomButton');
 retriggerEvents();
 //and then post player init calls
 function retriggerEvents() {
-
+  //look away, lest you lose your mind entirely.
   for(let duo of queuedRetriggers) {
     let retriggerEvent = duo[0];
     let item = duo[1];
