@@ -79,7 +79,7 @@ function Inventory(pojoItems) {
     this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', genericClick, 'this is a hint for keyboard!'));
     this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', genericClick, 'this is a hint for mouse!'));
     this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick, 'this is a hint for flashlight!'));
-    this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', genericClick, 'this is a hint for backpack!'));
+    this.items.push(new Items('backpack', false, '/index.html', '333px', '5rem', genericClick, 'this is a hint for backpack!'));
     this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', genericClick, 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
   }
@@ -93,6 +93,16 @@ function Inventory(pojoItems) {
     let tui = document.querySelector('#top-ui');
     let objectives = tui.appendChild(document.createElement('section'));
     objectives.id = 'objectives';
+
+    let p = document.createElement('p');
+    p.innerHTML =
+    'Objective:'+ '<br />' + '<hr>' +
+    '- Find all items in the room'+ '<br />' + '<br />' +
+    '- unlock nextroom' + '<br />' + '<br />' +
+    '- use hints when needed';
+    let pText = objectives.appendChild(p);
+    pText.id = 'objective-text';
+
 
     let a = document.createElement('a');
     a.href = '#';

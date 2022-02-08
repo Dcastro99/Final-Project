@@ -7,8 +7,8 @@ body {
   margin: 0;
 }
 #rooms{
-  max-width: max-content;
-  height: max-content;
+  padding: 2rem;
+ 
 }
 
 /* main when dimmed */
@@ -18,7 +18,7 @@ body {
 }
 
 section {
-  width: 1560px;
+  
   border: 1px solid black;
   border-width: 2px;
   padding: 2rem;
@@ -29,7 +29,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 3rem;
+
 }
 
 
@@ -46,37 +46,61 @@ section {
   flex-direction: row;
   justify-content: space-between; 
   margin-bottom:4rem;
+  padding: 2rem;
 }
 
+#objectives {
+  padding: 0;
+  height: 200px;
+  border: 1px solid black;
+  border-width: 2px; 
+}
+
+#objective-text {
+  width: 300px;
+  height: 200px;
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 22px;
+}
+
+
 #bottom-ui {
+  
+  display: flex;
+  flex-direction: row;
   z-index: 1;
   background-color: white;
   align-items: flex-end;
-  position: relative;
+  position:relative;
   margin-top:30rem;
 }
 
-
-#objectives {
-  width: 175px;
-  border: 1px solid black;
-  border-width: 2px;
-  padding: 4rem;
+.hints {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
 }
-
 
 #nextRoomButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
   background-color: rgba(128, 128, 128, 0.734);
   color: lightgrey;
-  padding: .5rem 1rem;
-  width: max-content;
-  height: max-content;
-  font-size: .8rem;
-  margin: 1rem;
+  text-align: center;
   pointer-events: none;
+  margin-right: 150px;
 }
 #nextRoomButton.clicks-allowed {
-  background-color: rosybrown;
+  background-color: rgb(199, 122, 122);
   color: white;
   cursor: pointer;
   pointer-events: auto;
@@ -87,6 +111,8 @@ section {
 
 
 #hintButton{
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 25px;
   width: 175px;
   height: 50px;
   border-radius: 8px;
@@ -110,8 +136,9 @@ section {
   min-height: 96px;
 }
 #inventory{
+font-family: 'Bebas Neue', 'cursive';
+font-size: 35px;
 
-  margin-bottom: 5rem;
 }
 /* leader board CSS */
 
@@ -195,7 +222,7 @@ footer{
     margin-left: 6rem;
     margin-right: 6rem;
  }
-}
+
 h3:hover {
   color:black;
   border-style: solid;
@@ -216,15 +243,16 @@ header {
 .aboutMe {
   font-size: 1.25rem;
   font-style: italic;
+  padding: 2rem;
 }
 
 .intro {
   display: flex;
-  width: 1700px;
+  /* width: 1700px; */
   margin: 6rem auto;
   align-items: center;
   justify-content: space-between;
-  
+  padding: 7rem;
 }
 
 h4 {
