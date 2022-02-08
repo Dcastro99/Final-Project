@@ -254,6 +254,7 @@ function flashlightClick(event) {
   if (itemClicked === 'flashlight') {
     movementButton.className = 'clicks-allowed';
     enableDoorButton();
+    let item = player.inventory.items.filter(possible => possible.name === 'flashlight')[0];
     player.inventory.collect(item);
   }
 }
