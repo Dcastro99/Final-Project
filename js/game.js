@@ -158,17 +158,12 @@ function Items(name, collected, page, x, y, eventName, hint) {
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
     if (!this.collected && window.location.pathname !== this.page) {
-      console.log(this.name, 'did not render because out of location and not collected.');
       return;
     }
     let img = main.appendChild(document.createElement('img'));
-    try {
-      img.src = this.src;
-      img.alt = this.name;
-      img.id = this.name;
-    } catch (error) {
-      console.warn(error, this.src);
-    }
+    img.src = this.src;
+    img.alt = this.name;
+    img.id = this.name;
     if (this.collected) {
       // we don't have to check if querySelector did nothing because there should always be enough slots for items
       let slot = document.querySelector('.itemslot:empty');
@@ -300,8 +295,6 @@ function flashlightClick(event, silent) {
   if (!silent) {
     new Popup(flashlightPopup);
   }
-  console.log('hello', silent);
-  console.log(movementButton);
   movementButton.className = 'clicks-allowed';
   enableDoorButton();
   let item = player.inventory.items.filter(possible => possible.name === 'flashlight')[0];
