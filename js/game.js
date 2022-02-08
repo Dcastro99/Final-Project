@@ -74,7 +74,6 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.forEach(item => item.render());
     this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', genericClick));
     this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', genericClick));
     this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', genericClick));
@@ -82,7 +81,7 @@ function Inventory(pojoItems) {
     this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick));
     this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', genericClick));
     this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', genericClick));
-
+    this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
   this.collect = function(item) {
@@ -247,6 +246,7 @@ function flashlightClick(event) {
   if (itemClicked === 'flashlight') {
     movementButton.className = 'clicks-allowed';
     enableDoorButton();
+    let item = player.inventory.items.filter(possible => possible.name === 'flashlight')[0];
     player.inventory.collect(item);
   }
 }

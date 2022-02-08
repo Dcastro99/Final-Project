@@ -55,9 +55,7 @@ section {
   position: relative;
   margin-top:30rem;
 }
-div {
-  height: max-content;
-}
+
 
 #objectives {
   width: 175px;
@@ -66,6 +64,26 @@ div {
   padding: 4rem;
 }
 
+
+#nextRoomButton {
+  background-color: rgba(128, 128, 128, 0.734);
+  color: lightgrey;
+  padding: .5rem 1rem;
+  width: max-content;
+  height: max-content;
+  font-size: .8rem;
+  margin: 1rem;
+  pointer-events: none;
+}
+#nextRoomButton.clicks-allowed {
+  background-color: rosybrown;
+  color: white;
+  cursor: pointer;
+  pointer-events: auto;
+}
+#nextRoomButton.clicks-allowed:hover {
+  background-color: rgb(211, 187, 175)
+}
 
 
 #hintButton{
@@ -168,14 +186,15 @@ footer{
 
 /* about-us */
 
-h2 {
-  font-size: 40px;
-  text-align: center;
-  border-style: solid;
-  background-color: blueviolet;
-  padding: 1rem;
-  margin-left: 6rem;
-  margin-right: 6rem;
+ h2 {
+    font-size: 40px;
+    text-align: center;
+    border-style: solid;
+    background-color: blueviolet;
+    padding: 1rem;
+    margin-left: 6rem;
+    margin-right: 6rem;
+ }
 }
 h3:hover {
   color:black;
@@ -194,7 +213,7 @@ header {
   margin-bottom: 0;
 }
 
- .aboutMe {
+.aboutMe {
   font-size: 1.25rem;
   font-style: italic;
 }
@@ -208,6 +227,6 @@ header {
   
 }
 
-h4{
+h4 {
   font-size: 1.5rem;
 }
