@@ -74,13 +74,13 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', genericClick));
-    this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', genericClick));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', genericClick));
-    this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', genericClick));
-    this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick));
-    this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', genericClick));
-    this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', genericClick));
+    this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', genericClick, 'this is a hint for logo!'));
+    this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', genericClick, 'this is a hint for laptops!'));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', genericClick, 'this is a hint for keyboard!'));
+    this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', genericClick, 'this is a hint for mouse!'));
+    this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', flashlightClick, 'this is a hint for flashlight!'));
+    this.items.push(new Items('backback', false, '/index.html', '333px', '5rem', genericClick, 'this is a hint for backpack!'));
+    this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', genericClick, 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
@@ -114,7 +114,7 @@ function genericClick(){
 }
 /// Item type! They old the name, data the img tag needs, and location it needs to render.
 /// It also renders itself onto the page, but Inventory type decides when.
-function Items(name, collected, page, x, y, eventCallback) {
+function Items(name, collected, page, x, y, eventCallback, hint) {
 
   this.name = name;
   this.collected = collected;
@@ -123,6 +123,7 @@ function Items(name, collected, page, x, y, eventCallback) {
   this.x = x;
   this.y = y;
   this.eventCallback = eventCallback;
+  this.hint = hint;
   this.render = function () {
     //unrender the old if it exists
     let found = document.querySelector(`#${this.name}`);
@@ -186,16 +187,23 @@ function HintSystem(initialCooldown) {
       return;
     }
     this.startCooldown();
-    return;
+    //list of all items it makes sense to hint at
+    let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
+    //hinted at item
+    let hintedAt = possibleItemsToHint[Math.random() * possibleItemsToHint.length];
+    //paragraph the hint will go into
+    let hintP = document.querySelector('#hint');
+    hintP.textContent = hintedAt.hint;
+    player.inventory.collected;
   };
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
   }
 }
 
-function examplePopup(section) {
+function laptopPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'Woah, we\'re halfway there. Woooah hoah! Livin\' on a prayer!';
+  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!';
 }
 
 /**
@@ -234,7 +242,7 @@ function test() {
 function laptopClick(event) {
   let itemClicked = event.target.alt;
   if (itemClicked === 'laptop') {
-    alert('The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!');
+    new Popup(laptopPopup);
   }
   let item = player.inventory.items.filter(possible => possible.name === 'laptop')[0];
   player.inventory.collect(item);
@@ -256,7 +264,6 @@ function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
   if (window.location.pathname === '/index.html') {
     a.href = '/classroom.html';
-
   } else {
     a.href = '/index.html';
   }
