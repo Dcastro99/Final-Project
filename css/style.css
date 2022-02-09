@@ -1,14 +1,20 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 * {
   box-sizing: border-box;
 }
+html {
+  min-height: 100%;
+}
 
-body {
+body, #rooms, .flex-vertical {
   margin: 0;
+  min-height: 93vh;
+  
 }
 #rooms{
   padding: 2rem;
- 
+  
 }
 
 /* main when dimmed */
@@ -22,6 +28,7 @@ section {
   border: 1px solid black;
   border-width: 2px;
   padding: 2rem;
+  border-radius: 5px;
 }
 
 .flex-vertical {
@@ -29,7 +36,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+ 
 }
 
 
@@ -54,6 +61,7 @@ section {
   height: 200px;
   border: 1px solid black;
   border-width: 2px; 
+  
 }
 
 #objective-text {
@@ -63,6 +71,7 @@ section {
   text-align: center;
   font-family: 'Bebas Neue', 'cursive';
   font-size: 22px;
+  
 }
 
 
@@ -74,7 +83,7 @@ section {
   background-color: white;
   align-items: flex-end;
   position:relative;
-  margin-top:30rem;
+  /* margin-top:23rem; */
 }
 
 .hints {
@@ -111,7 +120,8 @@ section {
 
 
 #hintButton{
-  font-family: 'Bebas Neue', 'cursive';
+  /* font-family: 'Bebas Neue', 'cursive'; */
+  font-family: 'Permanent Marker', cursive;
   font-size: 25px;
   width: 175px;
   height: 50px;
