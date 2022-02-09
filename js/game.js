@@ -100,7 +100,7 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
+    // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
     this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', 'laptopClick', 'this is a hint for laptops!'));
     this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', 'genericClick', 'this is a hint for keyboard!'));
     this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', 'genericClick', 'this is a hint for mouse!'));
@@ -120,6 +120,16 @@ function Inventory(pojoItems) {
     let tui = document.querySelector('#top-ui');
     let objectives = tui.appendChild(document.createElement('section'));
     objectives.id = 'objectives';
+
+    let p = document.createElement('p');
+    p.innerHTML =
+    'Objective:'+ '<br />' + '<hr>' +
+    '- Find all items in the room'+ '<br />' + '<br />' +
+    '- unlock nextroom' + '<br />' + '<br />' +
+    '- use hints when needed';
+    let pText = objectives.appendChild(p);
+    pText.id = 'objective-text';
+
 
     let a = document.createElement('a');
     a.href = '#';
