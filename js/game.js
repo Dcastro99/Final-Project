@@ -61,6 +61,7 @@ function Player(savedata) {
   this.popups = [];
   if (!savedata) {
     ///first time setup
+    this.startDate = Date.now();
     if (window.location.pathname !== '/index.html') {
       window.location.href = 'index.html';
       return; //this will run again on the correct site
@@ -70,9 +71,10 @@ function Player(savedata) {
     this.hintSystem = new HintSystem();
   } else {
     //returning player
+    this.startDate = savedata.startDate;
     this.name = savedata.name;
     this.inventory = new Inventory(savedata.inventory.items);
-    this.hintSystem = new HintSystem(savedata.hintCooldown);
+    this.hintSystem = new HintSystem(savedata.hintCooldown, savedata.hintSystem.usedHints);
   }
 }
 
@@ -114,6 +116,9 @@ function Inventory(pojoItems) {
     item.collected = true;
     this.collected.push(item);
     item.render();
+    if(win_check()) {
+      return;
+    }
     save();
   };
   this.render = function () {
@@ -138,11 +143,6 @@ function Inventory(pojoItems) {
     a.id = 'nextRoomButton';
     a.appendChild(div);
     tui.appendChild(a);
-
-    let hintbtn = document.createElement('button');
-    hintbtn.innerHTML = 'Hint Button';
-    let hintButton = tui.appendChild(hintbtn);
-    hintButton.id = 'hintButton';
   };
   this.render();
 }
@@ -192,9 +192,11 @@ function Items(name, collected, page, x, y, eventName, hint) {
  * HintSystem manages all the hint-based functionality of the game. It renders the button for hints on the screen,
  * keeps track of the cooldown for using it
  */
-function HintSystem(initialCooldown) {
+function HintSystem(initialCooldown, usedHints) {
   ///how much time between asking for hints.
   this.hintCooldown = SECONDS(60);
+  ///How many hints have been requested in total
+  this.usedHints = usedHints;
   ///current timer
   this.currentTimeout;
   ///when we started the cooldown
@@ -211,15 +213,22 @@ function HintSystem(initialCooldown) {
   };
   ///renders the button onto the page.
   this.renderHintButton = function () {
-    //this needs to include an event listener that calls onHintRequested
-    return;
+    let tui = document.querySelector('#top-ui');
+    let hintbtn = document.createElement('button');
+    hintbtn.innerHTML = 'Hint Button';
+    let hintButton = tui.appendChild(hintbtn);
+    hintButton.id = 'hintButton';
+    hintButton.addEventListener('click', this.onHintRequested);
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function (event) {
-    if (this.currentTimeout) {
+    //this in this case is the hintbutton...
+    let hintSystem = player.hintSystem;
+    if(hintSystem.currentTimeout) {
       return;
     }
-    this.startCooldown();
+    hintSystem.startCooldown();
+    hintSystem.usedHints++;
     //list of all items it makes sense to hint at
     let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
     //hinted at item
@@ -232,6 +241,7 @@ function HintSystem(initialCooldown) {
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
   }
+  this.renderHintButton();
 }
 
 /**
@@ -319,4 +329,15 @@ function enableDoorButton() {
   } else {
     a.href = '/index.html';
   }
+}
+
+///check that will immediately end the game and send a new attempt to leaderboard.html, returning false.
+function win_check() {
+  if(player.inventory.collected.length >= 6) {
+    let completed_attempt = new Attempt(player.name, Date.now() - player.startDate, player.hintSystem.usedHints);
+    localStorage.setItem('completedGame', JSON.stringify(completed_attempt));
+    window.location.href = 'leaderboard.html';
+    return true;
+  }
+  return false;
 }
