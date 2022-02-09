@@ -162,7 +162,6 @@ footer{
     opacity: 1;
   }
 }
-/* about-us */
 
 /* about-us */
 
@@ -210,12 +209,18 @@ header {
   justify-content: space-between;
   padding-top: 0;
   padding-right: 1rem;
- 
 }
 
 h4{
   font-size: 1.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  padding-top: 0;
 }
+
+.intro > img{
+  width: 300px;
+  height: 300px;
+}
+
 
