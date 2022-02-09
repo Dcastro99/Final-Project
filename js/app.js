@@ -8,16 +8,9 @@ function SECONDS(num) {
   return num * 1000;
 }
 
-///Takes a stringified array and returns an array with all objects inside it reinstantiated
-function reinstantiateArray(stringifiedArray, Type) {
-  //items of the Item type
-  let loadedItems = [];
-  //plain old javascript objects
-  let parsedItems = JSON.parse(stringifiedArray);
-  for(let pojo of parsedItems) {
-    loadedItems.push(new Type(pojo));
-  }
-  return loadedItems;
-
+///Attempt type, just holds the score of the run. Held and rendered by leaderboard.
+function Attempt(name, time, usedHints) {
+  this.name = name;
+  this.time = time;
+  this.usedHints = usedHints;
 }
-
