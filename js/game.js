@@ -334,9 +334,12 @@ function test() {
 }
 
 function introPopup(section, popup) {
+  let h3 = section.appendChild(document.createElement('h3'));
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'This long day of coding seems to never end. \
-    You\'re pretty sure you just destroyed your company\'s repository \
+ 
+  h3.textContent = 'This long day of coding seems to never end.';
+  p.textContent = 
+    'You\'re pretty sure you just destroyed your company\'s repository \
     by accident, and you\'re definitely losing your job if you can\'t \
     figure out how to undo it. Unfortunately, you\'ve lost your tools \
     and everyone else has gone home already. Go find your things, and \

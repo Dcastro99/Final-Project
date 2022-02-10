@@ -197,7 +197,17 @@ footer{
   text-align: center;
 }
 
+/* intro popup */
+
+h3{
+  font-family: 'Permanent Marker', cursive;
+  font-size: 25px;
+  text-align: center;
+  position: relative;
+}
+
 .popup {
+  border-radius: 5px;
   border: 1px solid black;
   opacity: 1;
   background-color: white;
@@ -210,6 +220,10 @@ footer{
   animation-name: landing;
   animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+}
+.popup > *{
+  padding: 0.5rem;
 }
 
 @keyframes landing {
@@ -249,7 +263,7 @@ h3:hover {
   border-style: solid;
 }
 
-h3 {
+.back-button {
   border-style: solid;
   width: 70px;
   text-align: center;
@@ -371,7 +385,7 @@ h4 {
   width: 7rem;
 }
 
-}
+
 
 .cooldown {
   animation-name: initialLanding;
@@ -397,7 +411,7 @@ h4 {
 
 #hintButton.cooldown:hover + div {
   opacity: 1;
-
+}
 #leaderBoardButton {
   display: flex;
   justify-content: center;
@@ -415,4 +429,17 @@ h4 {
 
 #leaderBoardButton:hover{
   cursor: pointer;
+}
+
+.room1 {
+  background-image: url("/images/office.png");
+  background-position: center; 
+  background-repeat:no-repeat; 
+  background-size: cover; 
+}
+.room2 {
+  background-image: url("/images/office2.png");
+  background-position: center; 
+  background-repeat:no-repeat; 
+  background-size: cover; 
 }
