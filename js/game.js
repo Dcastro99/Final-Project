@@ -20,11 +20,17 @@ let queuedRetriggers = [];
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+
+//Post hint system rendering 
+postInitRender();
+//save after loading player to lock in new player data on first visits
+
 //prompt name
 if(!player.name) {
   new Popup(introPopup);
 }
 //save after loading player to lock in new player data on first visit. note they will have no name for now, that's OK.
+
 save();
 ///movement button - this has to occur AFTER player inits (inventory renders button) but BEFORE events (that touch it)
 const movementButton = document.getElementById('nextRoomButton');
@@ -113,12 +119,12 @@ function Inventory(pojoItems) {
   } else {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
-    this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', 'laptopClick', 'this is a hint for laptops!'));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', 'genericClick', 'this is a hint for keyboard!'));
-    this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', 'genericClick', 'this is a hint for mouse!'));
-    this.items.push(new Items('flashlight', false, '/index.html', '666px', '10rem', 'flashlightClick', 'this is a hint for flashlight!'));
-    this.items.push(new Items('backpack', false, '/index.html', '333px', '5rem', 'genericClick', 'this is a hint for backpack!'));
-    this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', 'genericClick', 'this is a hint for textbooks!'));
+    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'this is a hint for laptops!'));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '111rem', '22rem', 'genericClick', 'this is a hint for keyboard!'));
+    this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'this is a hint for mouse!'));
+    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'this is a hint for flashlight!'));
+    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'this is a hint for backpack!'));
+    this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
@@ -157,6 +163,7 @@ function Inventory(pojoItems) {
   };
   this.render();
 }
+
 
 /// Item type! They old the name, data the img tag needs, and location it needs to render.
 /// It also renders itself onto the page, but Inventory type decides when.
@@ -215,11 +222,15 @@ function HintSystem(initialCooldown, usedHints) {
   this.hintStartTime;
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
+    let hintButton = document.querySelector('#hintButton');
+    hintButton.classList.add('cooldown');
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = Date.now();
   };
   ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function () {
+    let hintButton = document.querySelector('#hintButton');
+    hintButton.classList.remove('cooldown');
     this.currentTimeout = undefined;
     //unlock button visually
   };
@@ -228,10 +239,12 @@ function HintSystem(initialCooldown, usedHints) {
     let tui = document.querySelector('#top-ui');
     let hintbtn = document.createElement('button');
     hintbtn.innerHTML = 'Hint Button';
-    let hintButton = tui.appendChild(hintbtn);
+    let hintGroup = tui.appendChild(document.createElement('div'));
+    let hintButton = hintGroup.appendChild(hintbtn);
     hintButton.id = 'hintButton';
     hintButton.addEventListener('click', this.onHintRequested);
-
+    let hiddendiv = hintGroup.appendChild(document.createElement('div'));
+    hiddendiv.textContent = 'On cooldown right now! (Try looking for items!)';
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function () {
@@ -251,10 +264,31 @@ function HintSystem(initialCooldown, usedHints) {
     hintP.textContent = hintedAt.hint;
 
   };
+  this.renderHintButton();
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
   }
-  this.renderHintButton();
+}
+
+function postInitRender(){
+  // Appending About us and leaderboard on the html
+  let aboutUs = document.createElement('a');
+  let tui = document.querySelector('#top-ui');
+  aboutUs.href = '/about-us.html';
+  let aboutUsButton = document.createElement('div');
+  aboutUs.textContent = 'About Us';
+  aboutUs.id = 'aboutUsButton';
+  aboutUs.appendChild(aboutUsButton);
+  tui.appendChild(aboutUs);
+
+  let leaderBoard = document.createElement('a');
+  leaderBoard.href = '/leaderboard.html';
+  let leaderBoardButton = document.createElement('div');
+  leaderBoard.textContent = 'Leader Board';
+  leaderBoard.id = 'leaderBoardButton';
+  leaderBoard.appendChild(leaderBoardButton);
+  tui.appendChild(leaderBoard);
+
 }
 
 /**
@@ -272,12 +306,13 @@ function Popup(renderFunction) {
     this.section.classList.add('popup');
     let handleInstruction = (this.renderFunction(this.section, this));
     if(handleInstruction === DISMISS_ON_CLICK) {
-      main.addEventListener('click', this.onDismiss);
+      setTimeout(main.addEventListener, 5, 'click', this.onDismiss, {once: true})
     }
   };
   this.onDismiss = function(){
     main.classList.remove('dimmed');
     let popup = player.popups[0];
+    console.log('popup: ', popup)
     popup.section.remove();
     popup.section = undefined;
     player.popups.shift();
@@ -325,13 +360,13 @@ function introPopup(section, popup) {
 
 function laptopPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!';
+  p.textContent = 'Your old trusty laptop! Oh, but damn. Someone took your mouse, and the keyboard was ruined by a relative a couple weeks back! (You\'ll need a new keyboard, too!)';
   return DISMISS_ON_CLICK;
 }
 
 function flashlightPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'With this, you\'ll be able to enter the next room.';
+  p.textContent = 'A Flashlight! While not particularly useful when it comes to coding, It will let you be able to enter the next room.';
   return DISMISS_ON_CLICK;
 }
 
