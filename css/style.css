@@ -61,7 +61,6 @@ section {
   height: 200px;
   border: 1px solid black;
   border-width: 2px; 
-  
 }
 
 #objective-text {
@@ -106,7 +105,8 @@ section {
   color: lightgrey;
   text-align: center;
   pointer-events: none;
-  margin-right: 150px;
+  flex-grow: 2;
+  margin: 0 8rem;
 }
 #nextRoomButton.clicks-allowed {
   background-color: rgb(199, 122, 122);
@@ -286,6 +286,24 @@ h4 {
   height: 300px;
 }
 
+#aboutUsButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 1;
+  margin: 0 15px;
+}
+
+#aboutUsButton:hover{
+  cursor: pointer;
+=======
 #lbMain {
   width: 400px;
   height: 82vh;
@@ -317,6 +335,7 @@ h4 {
 #lbLegend {
   display: flex;
   justify-content: space-around;
+
 }
 
 .cooldown {
@@ -343,4 +362,22 @@ h4 {
 
 #hintButton.cooldown:hover + div {
   opacity: 1;
+
+#leaderBoardButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 5;
+  margin-right: -35px;
+}
+
+#leaderBoardButton:hover{
+  cursor: pointer;
 }
