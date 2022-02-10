@@ -166,11 +166,7 @@ font-size: 35px;
   font-family: 'Special Elite', cursive;
   font-size: 6rem;
 }
-#lbMain{
-  height: 55rem;
-  display: block;
-  
-}
+
 #lbMain ul {
   margin-top: 2rem;
   margin-left: 15rem;
@@ -281,4 +277,35 @@ h4 {
   height: 300px;
 }
 
+#lbMain {
+  width: 400px;
+  height: 82vh;
+  margin: 0 auto;
+}
 
+#attempts-flex {
+  min-height: min-content;
+  max-height: 40rem;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  text-align: center;
+}
+
+.attemptBox {
+  align-items: center;
+  min-height: 2rem;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid black;
+}
+
+.attemptBox:last-child {
+  border-bottom: none;
+}
+
+#lbLegend {
+  display: flex;
+  justify-content: space-around;
+}
