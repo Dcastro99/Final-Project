@@ -217,6 +217,15 @@ footer{
   }
 }
 
+@keyframes initialLanding {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* about-us */
 
 h2 {
@@ -308,4 +317,30 @@ h4 {
 #lbLegend {
   display: flex;
   justify-content: space-around;
+}
+
+.cooldown {
+  animation-name: initialLanding;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+}
+
+.cooldown + div {
+  transition: all 0.5s ease-in-out;
+}
+
+#hintButton + div {
+  cursor:default;
+  position:absolute;
+  top: 120px;
+  right: 30px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 0.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+  opacity: 0;
+}
+
+#hintButton.cooldown:hover + div {
+  opacity: 1;
 }

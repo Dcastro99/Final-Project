@@ -211,11 +211,15 @@ function HintSystem(initialCooldown, usedHints) {
   this.hintStartTime;
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
+    let hintButton = document.querySelector('#hintButton');
+    hintButton.classList.add('cooldown');
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = Date.now();
   };
   ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function () {
+    let hintButton = document.querySelector('#hintButton');
+    hintButton.classList.remove('cooldown');
     this.currentTimeout = undefined;
     //unlock button visually
   };
@@ -224,9 +228,12 @@ function HintSystem(initialCooldown, usedHints) {
     let tui = document.querySelector('#top-ui');
     let hintbtn = document.createElement('button');
     hintbtn.innerHTML = 'Hint Button';
-    let hintButton = tui.appendChild(hintbtn);
+    let hintGroup = tui.appendChild(document.createElement('div'));
+    let hintButton = hintGroup.appendChild(hintbtn);
     hintButton.id = 'hintButton';
     hintButton.addEventListener('click', this.onHintRequested);
+    let hiddendiv = hintGroup.appendChild(document.createElement('div'));
+    hiddendiv.textContent = 'On cooldown right now! (Try looking for items!)';
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function (event) {
@@ -246,10 +253,10 @@ function HintSystem(initialCooldown, usedHints) {
     hintP.textContent = hintedAt.hint;
     player.inventory.collected;
   };
+  this.renderHintButton();
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
   }
-  this.renderHintButton();
 }
 
 /**
