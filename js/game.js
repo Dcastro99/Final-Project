@@ -1,5 +1,10 @@
 'use strict';
 
+//whether the popup will dismiss on a click event listen
+const DISMISS_ON_CLICK = 'dismiss_on_click';
+//the popup has no case for dismissing. This means the popup should have a way to deal with itself (submitting input, etc)
+const DISMISS_NONE = 'dismiss_none';
+
 ///global obj of all item functions which they can point to (methods do not save across local state stringification)
 const funcName2Function = {
   'genericClick': genericClick,
@@ -15,7 +20,11 @@ let queuedRetriggers = [];
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
-//save after loading player to lock in new player data on first visits
+//prompt name
+if(!player.name) {
+  new Popup(introPopup);
+}
+//save after loading player to lock in new player data on first visit. note they will have no name for now, that's OK.
 save();
 ///movement button - this has to occur AFTER player inits (inventory renders button) but BEFORE events (that touch it)
 const movementButton = document.getElementById('nextRoomButton');
@@ -66,7 +75,6 @@ function Player(savedata) {
       window.location.href = 'index.html';
       return; //this will run again on the correct site
     }
-    this.name = prompt('What is your name?', 'Bob');
     this.inventory = new Inventory();
     this.hintSystem = new HintSystem();
   } else {
@@ -253,41 +261,74 @@ function HintSystem(initialCooldown, usedHints) {
  */
 function Popup(renderFunction) {
   this.renderFunction = renderFunction;
-  this.renderListen = function(){
+  this.renderListen = function() {
     main.classList.add('dimmed');
     this.section = main.appendChild(document.createElement('section'));
     this.section.classList.add('popup');
-    this.renderFunction(this.section);
-    main.addEventListener('click', this.onDismiss);
+    let handleInstruction = (this.renderFunction(this.section, this));
+    if(handleInstruction === DISMISS_ON_CLICK) {
+      main.addEventListener('click', this.onDismiss);
+    }
   };
   this.onDismiss = function(){
     main.classList.remove('dimmed');
     let popup = player.popups[0];
-    main.removeEventListener('click', popup.onDismiss);
     popup.section.remove();
     popup.section = undefined;
     player.popups.shift();
+  };
+  this.handleName = function() {
+    let popup = player.popups[0];
+    let section = this.parentNode;
+    let input = section.querySelector('input');
+    player.name = input.value;
+    popup.onDismiss();
+    save();
   };
   player.popups.push(this);
   this.renderListen();
 }
 
 function test() {
-  new Popup(laptopPopup);
+  new Popup(introPopup);
+}
+
+function introPopup(section, popup) {
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'This long day of coding seems to never end. \
+    You\'re pretty sure you just destroyed your company\'s repository \
+    by accident, and you\'re definitely losing your job if you can\'t \
+    figure out how to undo it. Unfortunately, you\'ve lost your tools \
+    and everyone else has gone home already. Go find your things, and \
+    surely you\'ll overcome this horrible error.';
+  let inputLabel = section.appendChild(document.createElement('label'));
+  inputLabel.for = 'username';
+  inputLabel.textContent = 'Your Name:';
+  let input = section.appendChild(document.createElement('input'));
+  input.required = 'true';
+  input.type = 'text';
+  input.name = 'username';
+  input.id = 'username';
+  let button = section.appendChild(document.createElement('button'));
+  button.textContent = 'Submit';
+  button.addEventListener('click', popup.handleName);
+  return DISMISS_NONE; //we handle disposals with the above event listener
 }
 
 function laptopPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!!!';
+  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!';
+  return DISMISS_ON_CLICK;
 }
 
 function flashlightPopup(section) {
   let p = section.appendChild(document.createElement('p'));
   p.textContent = 'With this, you\'ll be able to enter the next room.';
+  return DISMISS_ON_CLICK;
 }
 
 function genericClick(event, silent){
-  if (!event.target.alt) {
+  if (!event.target.alt || player.popups.length) {
     return;
   }
   let item = player.inventory.items.filter(possible => possible.name === event.target.alt)[0];
@@ -297,7 +338,7 @@ function genericClick(event, silent){
 // laptop item event
 
 function laptopClick(event, silent) {
-  if (!event.target.alt) {
+  if (!event.target.alt || player.popups.length) {
     return;
   }
   if (!silent) {
@@ -309,7 +350,7 @@ function laptopClick(event, silent) {
 // flashlight item event
 
 function flashlightClick(event, silent) {
-  if (!event.target.alt) {
+  if (!event.target.alt || player.popups.length) {
     return;
   }
   if (!silent) {

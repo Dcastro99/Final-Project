@@ -31,10 +31,10 @@ function Leaderboard(saveData) {
   };
   this.renderAttempts = function() {
     if(!this.attempts.length) {
-      return
+      return;
     }
     let attemptBoxes = document.querySelector('#attempts-flex');
-    attemptBoxes.innerHTML = ''
+    attemptBoxes.innerHTML = '';
     this.attempts.forEach(attempt => {
       let attemptBox = attemptBoxes.appendChild(document.createElement('div'));
       attemptBox.classList.add('attemptBox');
@@ -70,8 +70,8 @@ function test(amt = 1) {
   for(let i = 0; i < amt; i++) {
     leaderboard.attempts.push(new Attempt(`Debug${Math.round(Math.random() * 100)}`, Date.now(), 2));
     let attemptBoxes = document.querySelector('#attempts-flex');
-    attemptBoxes.innerHTML = ''
-    leaderboard.renderAttempts()
+    attemptBoxes.innerHTML = '';
+    leaderboard.renderAttempts();
     save();
   }
 }
