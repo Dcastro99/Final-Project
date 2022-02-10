@@ -15,6 +15,8 @@ let queuedRetriggers = [];
 const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
+//Post hint system rendering 
+postInitRender();
 //save after loading player to lock in new player data on first visits
 save();
 ///movement button - this has to occur AFTER player inits (inventory renders button) but BEFORE events (that touch it)
@@ -144,25 +146,28 @@ function Inventory(pojoItems) {
     a.appendChild(div);
     tui.appendChild(a);
 
-    let bui = document.querySelector('#bottom-ui');
-    let hints = document.querySelector('.hints');
-    let itemList2 = document.querySelector('.itemDiv2');
-    let aboutUs = document.createElement('a');
-    aboutUs.href = '/about-us.html';
-    let aboutUsButton = document.createElement('button');
-    aboutUs.textContent = 'About Us';
-    aboutUs.id = 'aboutUsButton';
-    aboutUs.appendChild(aboutUsButton);
-    bui.insertBefore(aboutUs,hints);
 
 
-    let leaderBoard = document.createElement('a');
-    leaderBoard.href = '/leaderboard.html';
-    let leaderBoardButton = document.createElement('button');
-    leaderBoard.textContent = 'Leader Board';
-    leaderBoard.id = 'leaderBoardButton';
-    leaderBoard.appendChild(leaderBoardButton);
-    bui.insertBefore(leaderBoard,itemList2);
+
+    // let bui = document.querySelector('#bottom-ui');
+    // let hints = document.querySelector('.hints');
+    // let itemList2 = document.querySelector('.itemDiv2');
+    // let aboutUs = document.createElement('a');
+    // aboutUs.href = '/about-us.html';
+    // let aboutUsButton = document.createElement('button');
+    // aboutUs.textContent = 'About Us';
+    // aboutUs.id = 'aboutUsButton';
+    // aboutUs.appendChild(aboutUsButton);
+    // tui.insertBefore(aboutUs,nextRoomButton);
+
+
+    // let leaderBoard = document.createElement('a');
+    // leaderBoard.href = '/leaderboard.html';
+    // let leaderBoardButton = document.createElement('button');
+    // leaderBoard.textContent = 'Leader Board';
+    // leaderBoard.id = 'leaderBoardButton';
+    // leaderBoard.appendChild(leaderBoardButton);
+    // tui.insertBefore(leaderBoard,nextRoomButton);
 
   };
   this.render();
@@ -264,6 +269,27 @@ function HintSystem(initialCooldown, usedHints) {
     this.startCooldown(initialCooldown);
   }
   this.renderHintButton();
+}
+
+function postInitRender(){
+  // Appending About us and leaderboard on the html
+  let aboutUs = document.createElement('a');
+  let tui = document.querySelector('#top-ui');
+  aboutUs.href = '/about-us.html';
+  let aboutUsButton = document.createElement('div');
+  aboutUs.textContent = 'About Us';
+  aboutUs.id = 'aboutUsButton';
+  aboutUs.appendChild(aboutUsButton);
+  tui.appendChild(aboutUs);
+
+  let leaderBoard = document.createElement('a');
+  leaderBoard.href = '/leaderboard.html';
+  let leaderBoardButton = document.createElement('div');
+  leaderBoard.textContent = 'Leader Board';
+  leaderBoard.id = 'leaderBoardButton';
+  leaderBoard.appendChild(leaderBoardButton);
+  tui.appendChild(leaderBoard);
+
 }
 
 /**

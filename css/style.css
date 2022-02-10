@@ -61,7 +61,6 @@ section {
   height: 200px;
   border: 1px solid black;
   border-width: 2px; 
-  
 }
 
 #objective-text {
@@ -106,7 +105,8 @@ section {
   color: lightgrey;
   text-align: center;
   pointer-events: none;
-  margin-right: 150px;
+  flex-grow: 2;
+  margin: 0 8rem;
 }
 #nextRoomButton.clicks-allowed {
   background-color: rgb(199, 122, 122);
@@ -136,13 +136,6 @@ section {
   flex-direction: row; 
   justify-content: space-between;
 }
-#itemDiv2{
-  padding: 0;
-  width: 30rem;
-  display: flex;
-  flex-direction: row; 
-  justify-content: space-between;
-}
 .itemslot > img{
   width: 96px;
   height: 96px;
@@ -155,7 +148,7 @@ section {
 #inventory{
 font-family: 'Bebas Neue', 'cursive';
 font-size: 35px;
-margin-right: 200px;
+
 }
 /* leader board CSS */
 
@@ -288,53 +281,40 @@ h4 {
   height: 300px;
 }
 
-/* about us and leaderboard buttons */
-
-#leaderBoardButton{
+#aboutUsButton {
   display: flex;
   justify-content: center;
   align-items:center;
   font-family: 'Bebas Neue', 'cursive';
   font-size: 20px;
-  width: 200px;
-  height: 50px;
-  background-color: rgba(128, 128, 128, 0.734); 
-  color: lightgrey;
-  text-align: center;
-  pointer-events: none;
-  margin-right: 150px;
-  margin-left: 20px;
-}
-
-#leaderBoardButton{
+  width: 115px;
+  height: 55px;
   background-color: rgb(199, 122, 122);
   color: white;
-  cursor: pointer;
-  pointer-events: auto;
-}
-#leaderBoardButton:hover {
-  background-color: rgb(211, 187, 175)
+  text-align: center;
+  flex-shrink: 1;
+  margin: 0 15px;
 }
 
-#aboutUsButton{
+#aboutUsButton:hover{
+  cursor: pointer;
+}
+
+#leaderBoardButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
   font-family: 'Bebas Neue', 'cursive';
   font-size: 20px;
-  width: 200px;
-  height: 50px;
-  color: lightgrey;
-  text-align: center;
-  pointer-events: none;
-  margin-right: 200px;
-  margin-left: 20px;
-  margin-bottom: 0;
-}
-
-#aboutUsButton {
+  width: 115px;
+  height: 55px;
   background-color: rgb(199, 122, 122);
   color: white;
-  cursor: pointer;
-  pointer-events: auto;
+  text-align: center;
+  flex-shrink: 5;
+  margin-right: -35px;
 }
-#aboutUsButtonhover {
-  background-color: rgb(211, 187, 175)
+
+#leaderBoardButton:hover{
+  cursor: pointer;
 }
