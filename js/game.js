@@ -95,8 +95,8 @@ function Inventory(pojoItems) {
       this.items.push(item);
       if(item.collected) {
         let retriggerEvent = funcName2Function[item.eventName];
+        //the retrigger re-collects the item, so we don't need to here.
         queuedRetriggers.push([retriggerEvent, item]);
-        this.collected.push(item);
       }
       item.render();
     }
@@ -106,7 +106,7 @@ function Inventory(pojoItems) {
     this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', 'laptopClick', 'this is a hint for laptops!'));
     this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', 'genericClick', 'this is a hint for keyboard!'));
     this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', 'genericClick', 'this is a hint for mouse!'));
-    this.items.push(new Items('flashlight', false, '/index.html', '666px', '5rem', 'flashlightClick', 'this is a hint for flashlight!'));
+    this.items.push(new Items('flashlight', false, '/index.html', '666px', '10rem', 'flashlightClick', 'this is a hint for flashlight!'));
     this.items.push(new Items('backpack', false, '/index.html', '333px', '5rem', 'genericClick', 'this is a hint for backpack!'));
     this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', 'genericClick', 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
@@ -196,7 +196,7 @@ function HintSystem(initialCooldown, usedHints) {
   ///how much time between asking for hints.
   this.hintCooldown = SECONDS(60);
   ///How many hints have been requested in total
-  this.usedHints = usedHints;
+  this.usedHints = usedHints || 0;
   ///current timer
   this.currentTimeout;
   ///when we started the cooldown
