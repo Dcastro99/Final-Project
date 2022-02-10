@@ -12,6 +12,8 @@ body, #rooms, .flex-vertical {
   min-height: 93vh;
   
 }
+
+
 #rooms{
   padding: 2rem;
   
@@ -309,7 +311,7 @@ h4 {
 }
 
 #backpack {
-  position: absolute;
+  
   height: 3.5rem;
   width: 3.5rem;
 }
@@ -322,24 +324,7 @@ h4 {
   height: 3rem;
   width: 3rem;
 }
-.room1 {
-  width: 139rem;
-  height: 78.4rem;
-  background-image: url("/images/office.png");
-  position: absolute;
-  background-position: center; 
-  background-repeat:no-repeat; 
-  background-size: cover; 
-}
-.room2 {
-  width: 139rem;
-  height: 78.4rem;
-  background-image: url("/images/office2.png");
-  position: absolute;
-  /* background-position: center;  */
-  background-repeat:no-repeat; 
-  background-size: cover; 
-}
+
 #mouse {
   height: 3rem;
   width: 3rem;
