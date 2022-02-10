@@ -280,6 +280,27 @@ h4 {
 }
 /* Item placement/sizing */
 
+#attempts-flex {
+  min-height: min-content;
+  max-height: 40rem;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  text-align: center;
+}
+
+.attemptBox {
+  align-items: center;
+  min-height: 2rem;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid black;
+}
+
+.attemptBox:last-child {
+  border-bottom: none;
+}
 
 #backpack {
   position: absolute;
