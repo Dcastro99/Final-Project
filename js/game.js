@@ -240,7 +240,7 @@ function HintSystem(initialCooldown, usedHints) {
     //list of all items it makes sense to hint at
     let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
     //hinted at item
-    let hintedAt = possibleItemsToHint[Math.random() * possibleItemsToHint.length];
+    let hintedAt = possibleItemsToHint[(Math.random() * possibleItemsToHint.length)];
     //paragraph the hint will go into
     let hintP = document.querySelector('#hint');
     hintP.textContent = hintedAt.hint;
@@ -267,12 +267,13 @@ function Popup(renderFunction) {
     this.section.classList.add('popup');
     let handleInstruction = (this.renderFunction(this.section, this));
     if(handleInstruction === DISMISS_ON_CLICK) {
-      main.addEventListener('click', this.onDismiss);
+      setTimeout(main.addEventListener, 5, 'click', this.onDismiss, {once: true})
     }
   };
   this.onDismiss = function(){
     main.classList.remove('dimmed');
     let popup = player.popups[0];
+    console.log('popup: ', popup)
     popup.section.remove();
     popup.section = undefined;
     player.popups.shift();
@@ -317,13 +318,13 @@ function introPopup(section, popup) {
 
 function laptopPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'The laptop has no mouse, and the keyboard was ruined by a relative a couple weeks back!';
+  p.textContent = 'Your old trusty laptop! Oh, but damn. Someone took your mouse, and the keyboard was ruined by a relative a couple weeks back! (You\'ll need a new keyboard, too!)';
   return DISMISS_ON_CLICK;
 }
 
 function flashlightPopup(section) {
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'With this, you\'ll be able to enter the next room.';
+  p.textContent = 'A Flashlight! While not particularly useful when it comes to coding, It will let you be able to enter the next room.';
   return DISMISS_ON_CLICK;
 }
 
