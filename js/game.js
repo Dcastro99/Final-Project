@@ -72,6 +72,7 @@ function Player(savedata) {
     ///first time setup
     this.startDate = Date.now();
     if (window.location.pathname !== '/index.html') {
+      //'index.html' will send you to the index html without the slash here
       window.location.href = 'index.html';
       return; //this will run again on the correct site
     }
@@ -105,6 +106,7 @@ function Inventory(pojoItems) {
         let retriggerEvent = funcName2Function[item.eventName];
         //the retrigger re-collects the item, so we don't need to here.
         queuedRetriggers.push([retriggerEvent, item]);
+
       }
       item.render();
     }
@@ -151,6 +153,7 @@ function Inventory(pojoItems) {
     a.id = 'nextRoomButton';
     a.appendChild(div);
     tui.appendChild(a);
+
   };
   this.render();
 }
@@ -190,6 +193,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
     }
     img.addEventListener('click', funcName2Function[this.eventName]);
     img.style.cssText = `position: absolute; left: ${x}; bottom: ${y}`;
+
   };
 }
 
@@ -220,16 +224,17 @@ function HintSystem(initialCooldown, usedHints) {
     //unlock button visually
   };
   ///renders the button onto the page.
-  this.renderHintButton = function () {
+  this.renderHintButton = function (event) {
     let tui = document.querySelector('#top-ui');
     let hintbtn = document.createElement('button');
     hintbtn.innerHTML = 'Hint Button';
     let hintButton = tui.appendChild(hintbtn);
     hintButton.id = 'hintButton';
     hintButton.addEventListener('click', this.onHintRequested);
+
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
-  this.onHintRequested = function (event) {
+  this.onHintRequested = function () {
     //this in this case is the hintbutton...
     let hintSystem = player.hintSystem;
     if(hintSystem.currentTimeout) {
@@ -240,11 +245,11 @@ function HintSystem(initialCooldown, usedHints) {
     //list of all items it makes sense to hint at
     let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
     //hinted at item
-    let hintedAt = possibleItemsToHint[(Math.random() * possibleItemsToHint.length)];
+    let hintedAt = possibleItemsToHint[Math.floor(Math.random() * possibleItemsToHint.length)];
     //paragraph the hint will go into
     let hintP = document.querySelector('#hint');
     hintP.textContent = hintedAt.hint;
-    player.inventory.collected;
+
   };
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
