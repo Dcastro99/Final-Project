@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 * {
   box-sizing: border-box;
 }
+
 html {
   min-height: 100%;
 }
@@ -10,23 +12,14 @@ html {
 body, #rooms, .flex-vertical {
   margin: 0;
   min-height: 93vh;
-  
 }
 
 
 #rooms{
   padding: 2rem;
-  
-}
-
-/* main when dimmed */
-.dimmed {
-  opacity: 0.7;
-  background-color: black;
 }
 
 section {
-  
   border: 1px solid black;
   border-width: 2px;
   padding: 2rem;
@@ -34,14 +27,10 @@ section {
 }
 
 .flex-vertical {
-  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
- 
 }
-
-
 
 .flex-horizontal {
   display: flex;
@@ -50,7 +39,6 @@ section {
 
 
 #top-ui {
-  
   display: flex;
   flex-direction: row;
   justify-content: space-between; 
@@ -75,9 +63,7 @@ section {
   background-color: white;
 }
 
-
 #bottom-ui {
-  
   display: flex;
   flex-direction: row;
   z-index: 1;
@@ -110,12 +96,14 @@ section {
   flex-grow: 2;
   margin: 0 8rem;
 }
+
 #nextRoomButton.clicks-allowed {
   background-color: rgb(199, 122, 122);
   color: white;
   cursor: pointer;
   pointer-events: auto;
 }
+
 #nextRoomButton.clicks-allowed:hover {
   background-color: rgb(211, 187, 175)
 }
@@ -128,7 +116,6 @@ section {
   width: 175px;
   height: 50px;
   border-radius: 8px;
-
 }
 
 #itemDiv1{
@@ -137,19 +124,22 @@ section {
   display: flex;
   flex-direction: row; 
 }
+
 #itemDiv1 div img {
   width: 96px;
   height: 96px;
   margin-left: 3rem;
 }
+
 .itemslot{
   height: 96px;
 }
+
 #inventory{
 font-family: 'Bebas Neue', 'cursive';
 font-size: 35px;
-
 }
+
 /* leader board CSS */
 
 #lbHead {
@@ -159,18 +149,14 @@ font-size: 35px;
   background-color: blueviolet;
   border: .5rem solid black;
   text-align: center;
-  
 }
+
 #lbHead h1{
   margin-top: 2rem;
   font-family: 'Special Elite', cursive;
   font-size: 6rem;
 }
-#lbMain {
-  width: 400px;
-  height: 82vh;
-  margin: 0 auto;
-}
+
 #lbMain ul {
   margin-top: 2rem;
   margin-left: 15rem;
@@ -179,18 +165,18 @@ font-size: 35px;
   height: 40rem;
   overflow: auto;
 }
+
 #reset {
   margin-top: 3rem;
   text-align: center;
 }
+
 #reset a {
-  
   padding: .3rem;
   border: .5rem solid black;
   text-decoration: none;
   font-family: 'Special Elite', cursive;
   font-size: 2rem;
-
 }
 
 footer{
@@ -309,6 +295,7 @@ h4 {
 
 #aboutUsButton:hover{
   cursor: pointer;
+}
 
 #lbMain {
   width: 400px;
@@ -344,7 +331,6 @@ h4 {
 }
 
 #backpack {
-  
   height: 3.5rem;
   width: 3.5rem;
 }
@@ -353,6 +339,7 @@ h4 {
   height: 10rem;
   width: 10rem;
 }
+
 #flashlight {
   height: 3rem;
   width: 3rem;
@@ -362,15 +349,15 @@ h4 {
   height: 3rem;
   width: 3rem;
 }
+
 #textbooks{
   height: 7rem;
   width: 7rem;
 }
+
 #keyboard{
   height: 2rem;
   width: 7rem;
-}
-
 }
 
 .cooldown {
@@ -381,6 +368,7 @@ h4 {
 
 .cooldown + div {
   transition: all 0.5s ease-in-out;
+  background-color: white;
 }
 
 #hintButton + div {
@@ -397,6 +385,7 @@ h4 {
 
 #hintButton.cooldown:hover + div {
   opacity: 1;
+}
 
 #leaderBoardButton {
   display: flex;
@@ -415,4 +404,28 @@ h4 {
 
 #leaderBoardButton:hover{
   cursor: pointer;
+}
+
+.room1 {
+  background-image: url("/images/office.png");
+  background-position: center; 
+  background-repeat:no-repeat; 
+  background-size: cover; 
+}
+.room2 {
+  background-image: url("/images/office2.png");
+  background-position: center; 
+  background-repeat:no-repeat; 
+  background-size: cover; 
+}
+
+/* main when dimmed */
+.dimmed {
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dimmed .item {
+  mix-blend-mode: darken;
+  color: rgba(0, 0, 0, 0.8);
 }

@@ -119,11 +119,11 @@ function Inventory(pojoItems) {
   } else {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
-    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'this is a hint for laptops!'));
+    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
     this.items.push(new Items('keyboard', false, '/classroom.html', '111rem', '22rem', 'genericClick', 'this is a hint for keyboard!'));
     this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'this is a hint for mouse!'));
-    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'this is a hint for flashlight!'));
-    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'this is a hint for backpack!'));
+    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
+    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
     this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
   }
@@ -192,6 +192,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
     img.src = this.src;
     img.alt = this.name;
     img.id = this.name;
+    img.classList.add('item')
     if (this.collected) {
       // we don't have to check if querySelector did nothing because there should always be enough slots for items
       let slot = document.querySelector('.itemslot:empty');
@@ -250,7 +251,7 @@ function HintSystem(initialCooldown, usedHints) {
   this.onHintRequested = function () {
     //this in this case is the hintbutton...
     let hintSystem = player.hintSystem;
-    if(hintSystem.currentTimeout) {
+    if(hintSystem.currentTimeout || player.popups.length) {
       return;
     }
     hintSystem.startCooldown();
