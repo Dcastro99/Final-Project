@@ -120,9 +120,9 @@ function Inventory(pojoItems) {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
     this.items.push(new Items('laptop', false, '/index.html', '3px', '8rem', 'laptopClick', 'this is a hint for laptops!'));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '9rem', 'genericClick', 'this is a hint for keyboard!'));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '60px', '16rem', 'genericClick', 'this is a hint for keyboard!'));
     this.items.push(new Items('mouse', false, '/classroom.html', '100px', '5rem', 'genericClick', 'this is a hint for mouse!'));
-    this.items.push(new Items('flashlight', false, '/index.html', '666px', '10rem', 'flashlightClick', 'this is a hint for flashlight!'));
+    this.items.push(new Items('flashlight', false, '/index.html', '666px', '14rem', 'flashlightClick', 'this is a hint for flashlight!'));
     this.items.push(new Items('backpack', false, '/index.html', '333px', '5rem', 'genericClick', 'this is a hint for backpack!'));
     this.items.push(new Items('textbooks', false, '/classroom.html', '555px', '5rem', 'genericClick', 'this is a hint for textbooks!'));
     this.items.forEach(item => item.render());
@@ -222,11 +222,15 @@ function HintSystem(initialCooldown, usedHints) {
   this.hintStartTime;
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
+    let hintButton = document.querySelector('#hintButton');
+    hintButton.classList.add('cooldown');
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = Date.now();
   };
   ///event for when the timeout finishes, enables hint button
   this.onCooldownFinished = function () {
+    let hintButton = document.querySelector('#hintButton');
+    hintButton.classList.remove('cooldown');
     this.currentTimeout = undefined;
     //unlock button visually
   };
@@ -235,10 +239,12 @@ function HintSystem(initialCooldown, usedHints) {
     let tui = document.querySelector('#top-ui');
     let hintbtn = document.createElement('button');
     hintbtn.innerHTML = 'Hint Button';
-    let hintButton = tui.appendChild(hintbtn);
+    let hintGroup = tui.appendChild(document.createElement('div'));
+    let hintButton = hintGroup.appendChild(hintbtn);
     hintButton.id = 'hintButton';
     hintButton.addEventListener('click', this.onHintRequested);
-
+    let hiddendiv = hintGroup.appendChild(document.createElement('div'));
+    hiddendiv.textContent = 'On cooldown right now! (Try looking for items!)';
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function () {
@@ -258,10 +264,10 @@ function HintSystem(initialCooldown, usedHints) {
     hintP.textContent = hintedAt.hint;
 
   };
+  this.renderHintButton();
   if (initialCooldown) {
     this.startCooldown(initialCooldown);
   }
-  this.renderHintButton();
 }
 
 function postInitRender(){
