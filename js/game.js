@@ -145,30 +145,6 @@ function Inventory(pojoItems) {
     a.id = 'nextRoomButton';
     a.appendChild(div);
     tui.appendChild(a);
-
-
-
-
-    // let bui = document.querySelector('#bottom-ui');
-    // let hints = document.querySelector('.hints');
-    // let itemList2 = document.querySelector('.itemDiv2');
-    // let aboutUs = document.createElement('a');
-    // aboutUs.href = '/about-us.html';
-    // let aboutUsButton = document.createElement('button');
-    // aboutUs.textContent = 'About Us';
-    // aboutUs.id = 'aboutUsButton';
-    // aboutUs.appendChild(aboutUsButton);
-    // tui.insertBefore(aboutUs,nextRoomButton);
-
-
-    // let leaderBoard = document.createElement('a');
-    // leaderBoard.href = '/leaderboard.html';
-    // let leaderBoardButton = document.createElement('button');
-    // leaderBoard.textContent = 'Leader Board';
-    // leaderBoard.id = 'leaderBoardButton';
-    // leaderBoard.appendChild(leaderBoardButton);
-    // tui.insertBefore(leaderBoard,nextRoomButton);
-
   };
   this.render();
 }
