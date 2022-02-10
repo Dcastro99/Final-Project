@@ -63,7 +63,6 @@ section {
   height: 200px;
   border: 1px solid black;
   border-width: 2px; 
-  
 }
 
 #objective-text {
@@ -108,7 +107,8 @@ section {
   color: lightgrey;
   text-align: center;
   pointer-events: none;
-  margin-right: 150px;
+  flex-grow: 2;
+  margin: 0 8rem;
 }
 #nextRoomButton.clicks-allowed {
   background-color: rgb(199, 122, 122);
@@ -221,6 +221,15 @@ footer{
   }
 }
 
+@keyframes initialLanding {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* about-us */
 
 h2 {
@@ -283,6 +292,30 @@ h4 {
 /* Item placement/sizing */
 
 
+#aboutUsButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 1;
+  margin: 0 15px;
+}
+
+#aboutUsButton:hover{
+  cursor: pointer;
+
+#lbMain {
+  width: 400px;
+  height: 82vh;
+  margin: 0 auto;
+}
+
 #attempts-flex {
   min-height: min-content;
   max-height: 40rem;
@@ -336,4 +369,50 @@ h4 {
 #keyboard{
   height: 2rem;
   width: 7rem;
+}
+
+}
+
+.cooldown {
+  animation-name: initialLanding;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+}
+
+.cooldown + div {
+  transition: all 0.5s ease-in-out;
+}
+
+#hintButton + div {
+  cursor:default;
+  position:absolute;
+  top: 120px;
+  right: 30px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 0.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+  opacity: 0;
+}
+
+#hintButton.cooldown:hover + div {
+  opacity: 1;
+
+#leaderBoardButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 5;
+  margin-right: -35px;
+}
+
+#leaderBoardButton:hover{
+  cursor: pointer;
 }
