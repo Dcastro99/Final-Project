@@ -164,10 +164,10 @@ font-size: 35px;
   font-family: 'Special Elite', cursive;
   font-size: 6rem;
 }
-#lbMain{
-  height: 55rem;
-  display: block;
-  
+#lbMain {
+  width: 400px;
+  height: 82vh;
+  margin: 0 auto;
 }
 #lbMain ul {
   margin-top: 2rem;
@@ -280,6 +280,7 @@ h4 {
 }
 /* Item placement/sizing */
 
+
 #attempts-flex {
   min-height: min-content;
   max-height: 40rem;
@@ -300,6 +301,11 @@ h4 {
 
 .attemptBox:last-child {
   border-bottom: none;
+}
+
+#lbLegend {
+  display: flex;
+  justify-content: space-around;
 }
 
 #backpack {
