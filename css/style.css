@@ -12,6 +12,8 @@ body, #rooms, .flex-vertical {
   min-height: 93vh;
   
 }
+
+
 #rooms{
   padding: 2rem;
   
@@ -70,7 +72,7 @@ section {
   text-align: center;
   font-family: 'Bebas Neue', 'cursive';
   font-size: 22px;
-  
+  background-color: white;
 }
 
 
@@ -134,16 +136,14 @@ section {
   width: 30rem;
   display: flex;
   flex-direction: row; 
-  justify-content: space-between;
 }
-.itemslot > img{
+#itemDiv1 div img {
   width: 96px;
   height: 96px;
+  margin-left: 3rem;
 }
-
 .itemslot{
-  
-  min-height: 96px;
+  height: 96px;
 }
 #inventory{
 font-family: 'Bebas Neue', 'cursive';
@@ -166,7 +166,11 @@ font-size: 35px;
   font-family: 'Special Elite', cursive;
   font-size: 6rem;
 }
-
+#lbMain {
+  width: 400px;
+  height: 82vh;
+  margin: 0 auto;
+}
 #lbMain ul {
   margin-top: 2rem;
   margin-left: 15rem;
@@ -285,6 +289,8 @@ h4 {
   width: 300px;
   height: 300px;
 }
+/* Item placement/sizing */
+
 
 #aboutUsButton {
   display: flex;
@@ -303,7 +309,7 @@ h4 {
 
 #aboutUsButton:hover{
   cursor: pointer;
-=======
+
 #lbMain {
   width: 400px;
   height: 82vh;
@@ -335,6 +341,35 @@ h4 {
 #lbLegend {
   display: flex;
   justify-content: space-around;
+}
+
+#backpack {
+  
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+#laptop {
+  height: 10rem;
+  width: 10rem;
+}
+#flashlight {
+  height: 3rem;
+  width: 3rem;
+}
+
+#mouse {
+  height: 3rem;
+  width: 3rem;
+}
+#textbooks{
+  height: 7rem;
+  width: 7rem;
+}
+#keyboard{
+  height: 2rem;
+  width: 7rem;
+}
 
 }
 
