@@ -22,7 +22,7 @@ const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
 
-//Post hint system rendering 
+//Post hint system rendering
 postInitRender();
 //save after loading player to lock in new player data on first visits
 
@@ -120,12 +120,6 @@ function Inventory(pojoItems) {
   } else {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
-    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'this is a hint for laptops!'));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '111rem', '22rem', 'genericClick', 'this is a hint for keyboard!'));
-    this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'this is a hint for mouse!'));
-    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'this is a hint for flashlight!'));
-    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'this is a hint for backpack!'));
-    this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'this is a hint for textbooks!'));
     this.items.push(new Items('folder', false, '/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
     this.items.push(new Items('binder', false, '/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
     this.items.push(new Items('stapler', false, '/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
@@ -139,6 +133,13 @@ function Inventory(pojoItems) {
     this.items.push(new Items('pencil', false, '/index.html', '75rem', '12rem', 'dummy1Click', ''));
     this.items.push(new Items('pins', false, '/index.html', '80rem', '15rem', 'dummy1Click', ''));
     this.items.push(new Items('notebook', false, '/index.html', '3rem', '16rem', 'dummy1Click', ''));
+    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
+    this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
+    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
+    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
+    this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
+    this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
   this.collect = function(item) {
@@ -157,10 +158,10 @@ function Inventory(pojoItems) {
 
     let p = document.createElement('p');
     p.innerHTML =
-    'Objective:'+ '<br />' + '<hr>' +
-    '- Find all items in the room'+ '<br />' + '<br />' +
-    '- unlock nextroom' + '<br />' + '<br />' +
-    '- use hints when needed';
+      'printing objectives...'+ '<br />' + '<hr>' +
+      '>find items you need in the room' + '<br />' +
+      '>unlock nextroom' + '<br />' +
+      '>use hints when needed';
     let pText = objectives.appendChild(p);
     pText.id = 'objective-text';
 
@@ -205,6 +206,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
     img.src = this.src;
     img.alt = this.name;
     img.id = this.name;
+    img.classList.add('item');
     if (this.collected) {
       // we don't have to check if querySelector did nothing because there should always be enough slots for items
       let slot = document.querySelector('.itemslot:empty');
@@ -226,16 +228,19 @@ function Items(name, collected, page, x, y, eventName, hint) {
  */
 function HintSystem(initialCooldown, usedHints) {
   ///how much time between asking for hints.
-  this.hintCooldown = SECONDS(60);
+  this.hintCooldown = SECONDS(1);
   ///How many hints have been requested in total
   this.usedHints = usedHints || 0;
   ///current timer
   this.currentTimeout;
+  ///if we can have a hint now
+  this.disabled = false;
   ///when we started the cooldown
   this.hintStartTime;
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
     let hintButton = document.querySelector('#hintButton');
+    this.disabled = true;
     hintButton.classList.add('cooldown');
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = Date.now();
@@ -244,37 +249,50 @@ function HintSystem(initialCooldown, usedHints) {
   this.onCooldownFinished = function () {
     let hintButton = document.querySelector('#hintButton');
     hintButton.classList.remove('cooldown');
-    this.currentTimeout = undefined;
+    console.log('finish');
+    player.hintSystem.disabled = false;
     //unlock button visually
   };
   ///renders the button onto the page.
   this.renderHintButton = function (event) {
     let tui = document.querySelector('#top-ui');
     let hintbtn = document.createElement('button');
-    hintbtn.innerHTML = 'Hint Button';
+    hintbtn.innerHTML = '>generate hint';
     let hintGroup = tui.appendChild(document.createElement('div'));
     let hintButton = hintGroup.appendChild(hintbtn);
     hintButton.id = 'hintButton';
     hintButton.addEventListener('click', this.onHintRequested);
     let hiddendiv = hintGroup.appendChild(document.createElement('div'));
-    hiddendiv.textContent = 'On cooldown right now! (Try looking for items!)';
+    hiddendiv.textContent = 'hint delivered, on cooldown right now...';
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function () {
     //this in this case is the hintbutton...
     let hintSystem = player.hintSystem;
-    if(hintSystem.currentTimeout) {
+    if(hintSystem.disabled || player.popups.length) {
+      console.log(hintSystem.disabled, player.popups.length);
       return;
     }
     hintSystem.startCooldown();
     hintSystem.usedHints++;
     //list of all items it makes sense to hint at
-    let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
+    let possibleItemsToHint = player.inventory.items.filter(item => {
+      !player.inventory.collected.includes(item)
+      && item.page === window.location.pathname
+      && item.hint;
+    });
     //hinted at item
-    let hintedAt = possibleItemsToHint[Math.floor(Math.random() * possibleItemsToHint.length)];
+    let hintedAt;
+    if(possibleItemsToHint.length) {
+      console.log('hi');
+      hintedAt = possibleItemsToHint[Math.floor(Math.random() * possibleItemsToHint.length)].hint;
+    } else {
+      hintedAt = 'You\'ve gotten everything in this room you need.';
+    }
+
     //paragraph the hint will go into
     let hintP = document.querySelector('#hint');
-    hintP.textContent = hintedAt.hint;
+    hintP.textContent = hintedAt;
 
   };
   this.renderHintButton();
@@ -319,13 +337,13 @@ function Popup(renderFunction) {
     this.section.classList.add('popup');
     let handleInstruction = (this.renderFunction(this.section, this));
     if(handleInstruction === DISMISS_ON_CLICK) {
-      setTimeout(main.addEventListener, 5, 'click', this.onDismiss, {once: true})
+      setTimeout(main.addEventListener, 5, 'click', this.onDismiss, {once: true});
     }
   };
   this.onDismiss = function(){
     main.classList.remove('dimmed');
     let popup = player.popups[0];
-    console.log('popup: ', popup)
+    console.log('popup: ', popup);
     popup.section.remove();
     popup.section = undefined;
     player.popups.shift();
@@ -347,9 +365,12 @@ function test() {
 }
 
 function introPopup(section, popup) {
+  let h3 = section.appendChild(document.createElement('h3'));
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'This long day of coding seems to never end. \
-    You\'re pretty sure you just destroyed your company\'s repository \
+
+  h3.textContent = 'This long day of coding seems to never end.';
+  p.textContent =
+    'You\'re pretty sure you just destroyed your company\'s repository \
     by accident, and you\'re definitely losing your job if you can\'t \
     figure out how to undo it. Unfortunately, you\'ve lost your tools \
     and everyone else has gone home already. Go find your things, and \

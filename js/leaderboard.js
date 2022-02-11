@@ -18,14 +18,11 @@ function Leaderboard(saveData) {
   this.checkCompletedGames = function() {
     let recieved = localStorage.getItem('completedGame');
     if(!recieved) {
-      //rephrase the button to just return to the game
-      let indexLink = document.querySelector('#reset > a');
-      indexLink.textContent = 'Back to the game!';
       return;
     }
     recieved = JSON.parse(recieved);
     let completedGame = new Attempt(recieved.name, recieved.time, recieved.usedHints);
-    this.attempts.push(completedGame);
+    this.attempts.unshift(completedGame);
     localStorage.removeItem('completedGame');
     localStorage.removeItem('player');
   };
@@ -68,7 +65,12 @@ function load() {
 
 function test(amt = 1) {
   for(let i = 0; i < amt; i++) {
-    leaderboard.attempts.push(new Attempt(`Debug${Math.round(Math.random() * 100)}`, Date.now(), 2));
+    let fakeNames = ['Alice', 'Bob', 'Carol', 'Ted', 'Scott', 'Marcus', 'Jaiden', 'Lance'];
+    let min = 40000;
+    let max = 200000;
+    let randomTime = Math.floor(Math.random() * (max - min + 1)) + min;
+    let fakeTime = Date.now() + randomTime;
+    leaderboard.attempts.push(new Attempt(`${fakeNames[Math.floor(Math.random() * fakeNames.length)]}`, fakeTime, Math.floor(Math.random() * 4)));
     let attemptBoxes = document.querySelector('#attempts-flex');
     attemptBoxes.innerHTML = '';
     leaderboard.renderAttempts();
