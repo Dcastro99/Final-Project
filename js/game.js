@@ -168,7 +168,7 @@ function Inventory(pojoItems) {
 
 
     let a = document.createElement('a');
-    a.href = '#';
+    a.href = './';
     let div = document.createElement('div');
     div.textContent = 'Nextroom';
     a.id = 'nextRoomButton';
