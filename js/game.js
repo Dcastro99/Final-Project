@@ -121,12 +121,12 @@ function Inventory(pojoItems) {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
 
-    this.items.push(new Items('folder', false, '/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
-    this.items.push(new Items('binder', false, '/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
-    this.items.push(new Items('stapler', false, '/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
-    this.items.push(new Items('file', false, '/classroom.html', '70rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('sharpener', false, '/classroom.html', '8rem', '20rem', 'dummy1Click', ''));
-    this.items.push(new Items('globe', false, '/classroom.html', '23rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('folder', false, '/git-help/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
+    this.items.push(new Items('binder', false, '/git-help/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
+    this.items.push(new Items('stapler', false, '/git-help/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
+    this.items.push(new Items('file', false, '/git-help/classroom.html', '70rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('sharpener', false, '/git-help/classroom.html', '8rem', '20rem', 'dummy1Click', ''));
+    this.items.push(new Items('globe', false, '/git-help/classroom.html', '23rem', '23rem', 'dummy1Click', ''));
     this.items.push(new Items('eraser', false, '/git-help/', '23rem', '23rem', 'dummy1Click', ''));
     this.items.push(new Items('crayons', false, '/git-help/', '50rem', '12rem', 'dummy1Click', ''));
     this.items.push(new Items('clock', false, '/git-help/', '63rem', '23rem', 'dummy1Click', ''));
@@ -135,11 +135,11 @@ function Inventory(pojoItems) {
     this.items.push(new Items('pins', false, '/git-help/', '80rem', '15rem', 'dummy1Click', ''));
     this.items.push(new Items('notebook', false, '/git-help/', '3rem', '16rem', 'dummy1Click', ''));
     this.items.push(new Items('laptop', false, '/git-help/', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
-    this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
+    this.items.push(new Items('keyboard', false, '/git-help/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
+    this.items.push(new Items('mouse', false, '/git-help/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
     this.items.push(new Items('flashlight', false, '/git-help/', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
     this.items.push(new Items('backpack', false, '/git-help/', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
-    this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
+    this.items.push(new Items('textbooks', false, '/git-help/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
     this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
