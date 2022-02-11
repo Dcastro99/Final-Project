@@ -127,18 +127,18 @@ function Inventory(pojoItems) {
     this.items.push(new Items('file', false, '/classroom.html', '70rem', '23rem', 'dummy1Click', ''));
     this.items.push(new Items('sharpener', false, '/classroom.html', '8rem', '20rem', 'dummy1Click', ''));
     this.items.push(new Items('globe', false, '/classroom.html', '23rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('eraser', false, '/index.html', '23rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('crayons', false, '/index.html', '50rem', '12rem', 'dummy1Click', ''));
-    this.items.push(new Items('clock', false, '/index.html', '63rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('pen', false, '/index.html', '10rem', '11rem', 'dummy1Click', ''));
-    this.items.push(new Items('pencil', false, '/index.html', '75rem', '12rem', 'dummy1Click', ''));
-    this.items.push(new Items('pins', false, '/index.html', '80rem', '15rem', 'dummy1Click', ''));
-    this.items.push(new Items('notebook', false, '/index.html', '3rem', '16rem', 'dummy1Click', ''));
-    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
+    this.items.push(new Items('eraser', false, '/git-help/', '23rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('crayons', false, '/git-help/', '50rem', '12rem', 'dummy1Click', ''));
+    this.items.push(new Items('clock', false, '/git-help/', '63rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('pen', false, '/git-help/', '10rem', '11rem', 'dummy1Click', ''));
+    this.items.push(new Items('pencil', false, '/git-help/', '75rem', '12rem', 'dummy1Click', ''));
+    this.items.push(new Items('pins', false, '/git-help/', '80rem', '15rem', 'dummy1Click', ''));
+    this.items.push(new Items('notebook', false, '/git-help/', '3rem', '16rem', 'dummy1Click', ''));
+    this.items.push(new Items('laptop', false, '/git-help/', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
     this.items.push(new Items('keyboard', false, '/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
     this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
-    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
-    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
+    this.items.push(new Items('flashlight', false, '/git-help/', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
+    this.items.push(new Items('backpack', false, '/git-help/', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
     this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
     this.items.forEach(item => item.render());
   }
@@ -480,10 +480,10 @@ function dummy1Click(event, silent) {
 
 function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
-  if (window.location.pathname === '/index.html') {
+  if (window.location.pathname === '/git-help/') {
     a.href = '../classroom.html';
   } else {
-    a.href = '../index.html';
+    a.href = '/git-help/';
   }
 }
 
