@@ -229,7 +229,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
  */
 function HintSystem(initialCooldown, usedHints) {
   ///how much time between asking for hints.
-  this.hintCooldown = SECONDS(1);
+  this.hintCooldown = SECONDS(60);
   ///How many hints have been requested in total
   this.usedHints = usedHints || 0;
   ///current timer
