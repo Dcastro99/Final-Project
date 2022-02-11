@@ -304,7 +304,7 @@ function postInitRender(){
   // Appending About us and leaderboard on the html
   let aboutUs = document.createElement('a');
   let tui = document.querySelector('#top-ui');
-  aboutUs.href = '../about-us.html';
+  aboutUs.href = '/git-help/about-us.html';
   let aboutUsButton = document.createElement('div');
   aboutUs.textContent = 'About Us';
   aboutUs.id = 'aboutUsButton';
@@ -312,7 +312,7 @@ function postInitRender(){
   tui.appendChild(aboutUs);
 
   let leaderBoard = document.createElement('a');
-  leaderBoard.href = '../leaderboard.html';
+  leaderBoard.href = '/git-help/leaderboard.html';
   let leaderBoardButton = document.createElement('div');
   leaderBoard.textContent = 'Leader Board';
   leaderBoard.id = 'leaderBoardButton';
@@ -358,7 +358,7 @@ function Popup(renderFunction) {
   this.handleVictory = function() {
     let completed_attempt = new Attempt(player.name, Date.now() - player.startDate, player.hintSystem.usedHints);
     localStorage.setItem('completedGame', JSON.stringify(completed_attempt));
-    window.location.href = '../leaderboard.html';
+    window.location.href = '/git-help/leaderboard.html';
   };
   player.popups.push(this);
   this.renderListen();
@@ -481,7 +481,7 @@ function dummy1Click(event, silent) {
 function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
   if (window.location.pathname === '/git-help/') {
-    a.href = '../classroom.html';
+    a.href = '/git-help/classroom.html';
   } else {
     a.href = '/git-help/';
   }
