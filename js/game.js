@@ -120,7 +120,7 @@ function Inventory(pojoItems) {
   } else {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
-  
+
     this.items.push(new Items('folder', false, '/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
     this.items.push(new Items('binder', false, '/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
     this.items.push(new Items('stapler', false, '/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
@@ -229,7 +229,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
  */
 function HintSystem(initialCooldown, usedHints) {
   ///how much time between asking for hints.
-  this.hintCooldown = SECONDS(1);
+  this.hintCooldown = SECONDS(60);
   ///How many hints have been requested in total
   this.usedHints = usedHints || 0;
   ///current timer
@@ -357,6 +357,11 @@ function Popup(renderFunction) {
     popup.onDismiss();
     save();
   };
+  this.handleVictory = function() {
+    let completed_attempt = new Attempt(player.name, Date.now() - player.startDate, player.hintSystem.usedHints);
+    localStorage.setItem('completedGame', JSON.stringify(completed_attempt));
+    window.location.href = 'leaderboard.html';
+  };
   player.popups.push(this);
   this.renderListen();
 }
@@ -388,6 +393,29 @@ function introPopup(section, popup) {
   button.textContent = 'Submit';
   button.addEventListener('click', popup.handleName);
   return DISMISS_NONE; //we handle disposals with the above event listener
+}
+
+function victoryPopup(section, popup) {
+  let victoryDate = Date.now() - player.startDate;
+  player.victoryDate = victoryDate;
+  let time = new Date(victoryDate);
+  let h3 = section.appendChild(document.createElement('h3'));
+  let p = section.appendChild(document.createElement('p'));
+  let h3two = section.appendChild(document.createElement('h3'));
+  let ptwo = section.appendChild(document.createElement('p'));
+
+  h3.textContent = 'That should be everything!';
+  p.textContent = 'Returning to your desk, you\'re settled in for one hell \
+    of a study session. You drop "git status" into the console \
+    before realizing something soul shattering.';
+  h3two.textContent = 'It was all just you forgetting to add \
+    the files before committing. Ughhh...';
+  ptwo.textContent = `Time Taken: ${time.getMinutes()} minutes, ${time.getSeconds()} seconds. \
+    Hints Used: ${player.hintSystem.usedHints}.`;
+  let button = section.appendChild(document.createElement('button'));
+  button.textContent = 'Submit Score';
+  button.addEventListener('click', popup.handleVictory);
+  return DISMISS_NONE;
 }
 
 function dummyPopup(section) {
@@ -464,9 +492,7 @@ function enableDoorButton() {
 ///check that will immediately end the game and send a new attempt to leaderboard.html, returning false.
 function win_check() {
   if(player.inventory.collected.length >= 6) {
-    let completed_attempt = new Attempt(player.name, Date.now() - player.startDate, player.hintSystem.usedHints);
-    localStorage.setItem('completedGame', JSON.stringify(completed_attempt));
-    window.location.href = 'leaderboard.html';
+    new Popup(victoryPopup);
     return true;
   }
   return false;
