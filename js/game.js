@@ -304,7 +304,7 @@ function postInitRender(){
   // Appending About us and leaderboard on the html
   let aboutUs = document.createElement('a');
   let tui = document.querySelector('#top-ui');
-  aboutUs.href = '../about-us.html';
+  aboutUs.href = './about-us.html';
   let aboutUsButton = document.createElement('div');
   aboutUs.textContent = 'About Us';
   aboutUs.id = 'aboutUsButton';
@@ -312,7 +312,7 @@ function postInitRender(){
   tui.appendChild(aboutUs);
 
   let leaderBoard = document.createElement('a');
-  leaderBoard.href = '../leaderboard.html';
+  leaderBoard.href = './leaderboard.html';
   let leaderBoardButton = document.createElement('div');
   leaderBoard.textContent = 'Leader Board';
   leaderBoard.id = 'leaderBoardButton';
