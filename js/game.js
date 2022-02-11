@@ -78,11 +78,11 @@ function Player(savedata) {
   if (!savedata) {
     ///first time setup
     this.startDate = Date.now();
-    if (window.location.pathname !== '/index.html') {
-      //'index.html' will send you to the index html without the slash here
-      window.location.href = 'index.html';
-      return; //this will run again on the correct site
-    }
+    // if (window.location.pathname !== '/index.html') {
+    //   //'index.html' will send you to the index html without the slash here
+    //   window.location.href = 'index.html';
+    //   return; //this will run again on the correct site
+    // }
     this.inventory = new Inventory();
     this.hintSystem = new HintSystem();
   } else {
@@ -303,7 +303,7 @@ function postInitRender(){
   // Appending About us and leaderboard on the html
   let aboutUs = document.createElement('a');
   let tui = document.querySelector('#top-ui');
-  aboutUs.href = '/about-us.html';
+  aboutUs.href = '../about-us.html';
   let aboutUsButton = document.createElement('div');
   aboutUs.textContent = 'About Us';
   aboutUs.id = 'aboutUsButton';
@@ -311,7 +311,7 @@ function postInitRender(){
   tui.appendChild(aboutUs);
 
   let leaderBoard = document.createElement('a');
-  leaderBoard.href = '/leaderboard.html';
+  leaderBoard.href = '../leaderboard.html';
   let leaderBoardButton = document.createElement('div');
   leaderBoard.textContent = 'Leader Board';
   leaderBoard.id = 'leaderBoardButton';
@@ -357,7 +357,7 @@ function Popup(renderFunction) {
   this.handleVictory = function() {
     let completed_attempt = new Attempt(player.name, Date.now() - player.startDate, player.hintSystem.usedHints);
     localStorage.setItem('completedGame', JSON.stringify(completed_attempt));
-    window.location.href = 'leaderboard.html';
+    window.location.href = '../leaderboard.html';
   };
   player.popups.push(this);
   this.renderListen();
