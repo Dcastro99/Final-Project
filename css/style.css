@@ -1,0 +1,517 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+
+html {
+  min-height: 100%;
+}
+
+body, #rooms, .flex-vertical {
+  margin: 0;
+  min-height: 93vh;
+}
+
+#rooms{
+  padding: 2rem;
+}
+
+section {
+  border: 1px solid black;
+  border-width: 2px;
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flex-horizontal {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+#top-ui {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  margin-bottom:4rem;
+  padding: 2rem;
+}
+
+#objectives {
+  padding: 0;
+  border: 1px solid white;
+  background-color: black;
+  border-width: 2px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#objectives:hover {
+  opacity: 0.5;
+}
+
+#objectives:active {
+  pointer-events: none;
+}
+
+#objective-text {
+  width: 300px;
+  padding: 1rem;
+  font-size: 19px;
+  color: rgb(135, 224, 0);
+  background-color: black;
+}
+
+#objective-text::before {
+  content: '>';
+}
+
+#bottom-ui {
+  display: flex;
+  flex-direction: row;
+  z-index: 1;
+  background-color: white;
+  align-items: flex-end;
+  position:relative;
+  border: 2px solid white;
+  opacity: 1;
+  background-color: black;
+  color: rgb(135, 224, 0);
+  transition: opacity 0.5s ease-in-out;
+}
+
+#bottom-ui p::before {
+  content: '>';
+}
+
+#bottom-ui:hover {
+  opacity: 0.5;
+}
+
+#bottom-ui:active {
+  pointer-events: none;
+}
+
+.hints {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+#nextRoomButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgba(128, 128, 128, 0.734);
+  color: lightgrey;
+  text-align: center;
+  pointer-events: none;
+  flex-grow: 2;
+  margin: 0 8rem;
+}
+
+#nextRoomButton.clicks-allowed {
+  background-color: rgb(199, 122, 122);
+  color: white;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+#nextRoomButton.clicks-allowed:hover {
+  background-color: rgb(211, 187, 175)
+}
+
+
+#hintButton{
+  font-size: 18px;
+  width: 175px;
+  height: 50px;
+  border-radius: 4px;
+  background-color: black;
+  color: rgb(135, 224, 0);
+}
+
+#itemDiv1{
+  padding: 0;
+  width: 30rem;
+  display: flex;
+  flex-direction: row; 
+  border: 1px solid white;
+}
+
+#itemDiv1 div img {
+  width: 96px;
+  height: 96px;
+  margin-left: 3rem;
+}
+
+.itemslot{
+  height: 96px;
+}
+
+#inventory{
+font-family: 'Bebas Neue', 'cursive';
+font-size: 35px;
+}
+
+/* leader board CSS */
+
+#lbHead {
+  height: 10rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  background-color: blueviolet;
+  border: .5rem solid black;
+  text-align: center;
+}
+
+#lbHead h1{
+  margin-top: 2rem;
+  font-family: 'Special Elite', cursive;
+  font-size: 6rem;
+}
+
+#reset {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+#reset a {
+  padding: .3rem;
+  border: .5rem solid black;
+  text-decoration: none;
+  font-family: 'Special Elite', cursive;
+  font-size: 2rem;
+}
+
+footer{
+  text-align: center;
+}
+
+/* intro popup */
+
+h3{
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 25px;
+  text-align: center;
+  position: relative;
+}
+
+.popup {
+  border-radius: 5px;
+  border: 2px solid white;
+  opacity: 1;
+  background-color: black;
+  color: rgb(135, 224, 0);
+  width: 40%;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: landing;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  font-family: 'Courier New', Courier, monospace;
+}
+.popup > *{
+  padding: 0.5rem;
+}
+
+.popup > p::before {
+  content: '>';
+}
+
+@keyframes landing {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes initialLanding {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* about-us */
+
+.about-header {
+  display: flex;
+  background-image: url("/images/office.png");
+  background-size: cover;
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: space-between;
+  font-size: 40px;
+  text-align: center;
+  border-style: solid;
+  background-color: blueviolet;
+  color: white;
+  padding: 3rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-bottom: 0;
+  margin-top: 1.5rem;
+}
+
+.back-button {
+  border-style: solid;
+  width: 70px;
+  text-align: center;
+  position: relative;
+
+}
+
+header {
+  margin-bottom: 0;
+}
+
+ .aboutMe {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-left: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.intro {
+  display: flex;
+  margin: 6rem auto;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0;
+  padding-right: 1rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-top: 0;
+}
+
+.intro > img{
+  width: 300px;
+  height: 300px;
+}
+/* Item placement/sizing */
+
+
+#aboutUsButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 1;
+  margin: 0 15px;
+}
+
+#aboutUsButton:hover{
+  cursor: pointer;
+}
+
+#lbMain {
+  width: 600px;
+  height: 82vh;
+  margin: 0 auto;
+}
+
+#attempts-flex {
+  min-height: min-content;
+  max-height: 40rem;
+  border: 3px solid white;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  text-align: center;
+  scrollbar-color: green white;
+}
+
+.attemptBox {
+  align-items: center;
+  min-height: 2rem;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid white;
+}
+
+.attemptBox:last-child {
+  border-bottom: none;
+}
+
+#lbLegend {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 22px;
+}
+
+#backpack {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+#laptop {
+  height: 10rem;
+  width: 10rem;
+}
+
+#flashlight {
+  height: 3rem;
+  width: 3rem;
+}
+
+#mouse {
+  height: 3rem;
+  width: 3rem;
+}
+
+#textbooks {
+  height: 7rem;
+  width: 7rem;
+}
+
+#keyboard {
+  height: 2rem;
+  width: 7rem;
+}
+
+.cooldown {
+  animation-name: initialLanding;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+}
+
+.cooldown + div {
+  transition: opacity 0.5s ease-in-out;
+  background-color: black;
+  border: 1px solid white;
+  color: rgb(135, 224, 0);
+}
+
+.cooldown + div::before {
+  content: '>';
+}
+
+#hintButton + div {
+  cursor:default;
+  position:absolute;
+  top: 120px;
+  right: 30px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 0.5rem;
+  opacity: 0;
+}
+
+#hintButton.cooldown:hover + div {
+  opacity: 1;
+}
+
+#leaderBoardButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 5;
+  margin-right: 0px;
+}
+
+.about-header #leaderBoardButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 5;
+}
+
+#leaderBoardButton:hover{
+  cursor: pointer;
+}
+
+.room1 {
+  background-image: url("/images/office.png");
+  background-position: center; 
+  background-repeat:no-repeat; 
+  background-size: cover; 
+}
+.room2 {
+  background-image: url("/images/office2.png");
+  background-position: center; 
+  background-repeat:no-repeat; 
+  background-size: cover; 
+}
+
+/* main when dimmed */
+.dimmed {
+  background-blend-mode: darken;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.dimmed .item {
+  mix-blend-mode: darken;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.dimmed .itemslot > .item {
+  mix-blend-mode: normal;
+  color: white;
+}
+
+.about-body {
+  background-color: black;
+  color: rgb(135, 224, 0);
+}
+
+.about-body img {
+  border-left: 4px solid rgb(135, 224, 0);
+}
+
+.glassy {
+  padding:1rem;
+  background-color: #00000046;
+  flex-grow: 1;
+  margin-right: 400px;
+}
