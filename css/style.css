@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+
 * {
   box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
 }
+
+
 
 html {
   min-height: 100%;
@@ -13,7 +17,6 @@ body, #rooms, .flex-vertical {
   margin: 0;
   min-height: 93vh;
 }
-
 
 #rooms{
   padding: 2rem;
@@ -48,19 +51,30 @@ section {
 
 #objectives {
   padding: 0;
-  height: 200px;
-  border: 1px solid black;
-  border-width: 2px; 
+  border: 1px solid white;
+  background-color: black;
+  border-width: 2px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#objectives:hover {
+  opacity: 0.5;
+}
+
+#objectives:active {
+  pointer-events: none;
 }
 
 #objective-text {
   width: 300px;
-  height: 200px;
   padding: 1rem;
-  text-align: center;
-  font-family: 'Bebas Neue', 'cursive';
-  font-size: 22px;
-  background-color: white;
+  font-size: 19px;
+  color: rgb(135, 224, 0);
+  background-color: black;
+}
+
+#objective-text::before {
+  content: '>';
 }
 
 #bottom-ui {
@@ -70,7 +84,23 @@ section {
   background-color: white;
   align-items: flex-end;
   position:relative;
-  /* margin-top:23rem; */
+  border: 2px solid white;
+  opacity: 1;
+  background-color: black;
+  color: rgb(135, 224, 0);
+  transition: opacity 0.5s ease-in-out;
+}
+
+#bottom-ui p::before {
+  content: '>';
+}
+
+#bottom-ui:hover {
+  opacity: 0.5;
+}
+
+#bottom-ui:active {
+  pointer-events: none;
 }
 
 .hints {
@@ -110,12 +140,12 @@ section {
 
 
 #hintButton{
-  /* font-family: 'Bebas Neue', 'cursive'; */
-  font-family: 'Permanent Marker', cursive;
-  font-size: 25px;
+  font-size: 18px;
   width: 175px;
   height: 50px;
-  border-radius: 8px;
+  border-radius: 4px;
+  background-color: black;
+  color: rgb(135, 224, 0);
 }
 
 #itemDiv1{
@@ -123,6 +153,7 @@ section {
   width: 30rem;
   display: flex;
   flex-direction: row; 
+  border: 1px solid white;
 }
 
 #itemDiv1 div img {
@@ -157,15 +188,6 @@ font-size: 35px;
   font-size: 6rem;
 }
 
-#lbMain ul {
-  margin-top: 2rem;
-  margin-left: 15rem;
-  margin-right: 15rem;
-  border: .2rem solid black;
-  height: 40rem;
-  overflow: auto;
-}
-
 #reset {
   margin-top: 3rem;
   text-align: center;
@@ -186,7 +208,7 @@ footer{
 /* intro popup */
 
 h3{
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Bebas Neue', 'cursive';
   font-size: 25px;
   text-align: center;
   position: relative;
@@ -194,9 +216,10 @@ h3{
 
 .popup {
   border-radius: 5px;
-  border: 1px solid black;
+  border: 2px solid white;
   opacity: 1;
-  background-color: white;
+  background-color: black;
+  color: rgb(135, 224, 0);
   width: 40%;
   margin: 0 auto;
   position: fixed;
@@ -206,10 +229,14 @@ h3{
   animation-name: landing;
   animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
-
+  font-family: 'Courier New', Courier, monospace;
 }
 .popup > *{
   padding: 0.5rem;
+}
+
+.popup > p::before {
+  content: '>';
 }
 
 @keyframes landing {
@@ -232,21 +259,22 @@ h3{
 
 /* about-us */
 
-h2 {
+.about-header {
+  display: flex;
+  background-image: url("/images/office.png");
+  background-size: cover;
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: space-between;
   font-size: 40px;
   text-align: center;
   border-style: solid;
   background-color: blueviolet;
+  color: white;
   padding: 3rem;
   margin-left: 4rem;
   margin-right: 4rem;
   margin-bottom: 0;
   margin-top: 1.5rem;
-}
-
-h3:hover {
-  color:black;
-  border-style: solid;
 }
 
 .back-button {
@@ -312,7 +340,7 @@ h4 {
 }
 
 #lbMain {
-  width: 400px;
+  width: 600px;
   height: 82vh;
   margin: 0 auto;
 }
@@ -320,11 +348,12 @@ h4 {
 #attempts-flex {
   min-height: min-content;
   max-height: 40rem;
-  border: 3px solid black;
+  border: 3px solid white;
   display: flex;
   flex-direction: column;
   overflow: auto;
   text-align: center;
+  scrollbar-color: green white;
 }
 
 .attemptBox {
@@ -332,7 +361,7 @@ h4 {
   min-height: 2rem;
   display: flex;
   justify-content: space-around;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid white;
 }
 
 .attemptBox:last-child {
@@ -340,8 +369,10 @@ h4 {
 }
 
 #lbLegend {
+  margin-top: 3rem;
   display: flex;
   justify-content: space-around;
+  font-size: 22px;
 }
 
 #backpack {
@@ -364,12 +395,12 @@ h4 {
   width: 3rem;
 }
 
-#textbooks{
+#textbooks {
   height: 7rem;
   width: 7rem;
 }
 
-#keyboard{
+#keyboard {
   height: 2rem;
   width: 7rem;
 }
@@ -381,8 +412,14 @@ h4 {
 }
 
 .cooldown + div {
-  transition: all 0.5s ease-in-out;
-  background-color: white;
+  transition: opacity 0.5s ease-in-out;
+  background-color: black;
+  border: 1px solid white;
+  color: rgb(135, 224, 0);
+}
+
+.cooldown + div::before {
+  content: '>';
 }
 
 #hintButton + div {
@@ -393,7 +430,6 @@ h4 {
   border: 1px solid black;
   border-radius: 3px;
   padding: 0.5rem;
-  font-family: Arial, Helvetica, sans-serif;
   opacity: 0;
 }
 
@@ -413,7 +449,21 @@ h4 {
   color: white;
   text-align: center;
   flex-shrink: 5;
-  margin-right: -35px;
+  margin-right: 0px;
+}
+
+.about-header #leaderBoardButton {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family: 'Bebas Neue', 'cursive';
+  font-size: 20px;
+  width: 115px;
+  height: 55px;
+  background-color: rgb(199, 122, 122);
+  color: white;
+  text-align: center;
+  flex-shrink: 5;
 }
 
 #leaderBoardButton:hover{
@@ -437,9 +487,31 @@ h4 {
 .dimmed {
   background-blend-mode: darken;
   background-color: rgba(0, 0, 0, 0.8);
+  transition: background-color 0.5s ease-in-out;
 }
 
 .dimmed .item {
   mix-blend-mode: darken;
   color: rgba(0, 0, 0, 0.8);
+}
+
+.dimmed .itemslot > .item {
+  mix-blend-mode: normal;
+  color: white;
+}
+
+.about-body {
+  background-color: black;
+  color: rgb(135, 224, 0);
+}
+
+.about-body img {
+  border-left: 4px solid rgb(135, 224, 0);
+}
+
+.glassy {
+  padding:1rem;
+  background-color: #00000046;
+  flex-grow: 1;
+  margin-right: 400px;
 }

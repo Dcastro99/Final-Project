@@ -21,7 +21,7 @@ const main = document.querySelector('main');
 //main object- see Player doc
 const player = load();
 
-//Post hint system rendering 
+//Post hint system rendering
 postInitRender();
 //save after loading player to lock in new player data on first visits
 
@@ -144,10 +144,10 @@ function Inventory(pojoItems) {
 
     let p = document.createElement('p');
     p.innerHTML =
-    'Objective:'+ '<br />' + '<hr>' +
-    '- Find all items in the room'+ '<br />' + '<br />' +
-    '- unlock nextroom' + '<br />' + '<br />' +
-    '- use hints when needed';
+      'printing objectives...'+ '<br />' + '<hr>' +
+      '>find items you need in the room' + '<br />' +
+      '>unlock nextroom' + '<br />' +
+      '>use hints when needed';
     let pText = objectives.appendChild(p);
     pText.id = 'objective-text';
 
@@ -192,7 +192,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
     img.src = this.src;
     img.alt = this.name;
     img.id = this.name;
-    img.classList.add('item')
+    img.classList.add('item');
     if (this.collected) {
       // we don't have to check if querySelector did nothing because there should always be enough slots for items
       let slot = document.querySelector('.itemslot:empty');
@@ -214,16 +214,19 @@ function Items(name, collected, page, x, y, eventName, hint) {
  */
 function HintSystem(initialCooldown, usedHints) {
   ///how much time between asking for hints.
-  this.hintCooldown = SECONDS(60);
+  this.hintCooldown = SECONDS(1);
   ///How many hints have been requested in total
   this.usedHints = usedHints || 0;
   ///current timer
   this.currentTimeout;
+  ///if we can have a hint now
+  this.disabled = false;
   ///when we started the cooldown
   this.hintStartTime;
   ///Starts the cooldown and disables getting hints.
   this.startCooldown = function (override) {
     let hintButton = document.querySelector('#hintButton');
+    this.disabled = true;
     hintButton.classList.add('cooldown');
     this.currentTimeout = setTimeout(this.onCooldownFinished, override || this.hintCooldown);
     this.hintStartTime = Date.now();
@@ -232,37 +235,46 @@ function HintSystem(initialCooldown, usedHints) {
   this.onCooldownFinished = function () {
     let hintButton = document.querySelector('#hintButton');
     hintButton.classList.remove('cooldown');
-    this.currentTimeout = undefined;
+    console.log('finish');
+    player.hintSystem.disabled = false;
     //unlock button visually
   };
   ///renders the button onto the page.
   this.renderHintButton = function (event) {
     let tui = document.querySelector('#top-ui');
     let hintbtn = document.createElement('button');
-    hintbtn.innerHTML = 'Hint Button';
+    hintbtn.innerHTML = '>generate hint';
     let hintGroup = tui.appendChild(document.createElement('div'));
     let hintButton = hintGroup.appendChild(hintbtn);
     hintButton.id = 'hintButton';
     hintButton.addEventListener('click', this.onHintRequested);
     let hiddendiv = hintGroup.appendChild(document.createElement('div'));
-    hiddendiv.textContent = 'On cooldown right now! (Try looking for items!)';
+    hiddendiv.textContent = 'hint delivered, on cooldown right now...';
   };
   ///function for when the button is pressed, has logic for whether the hint was allowed
   this.onHintRequested = function () {
     //this in this case is the hintbutton...
     let hintSystem = player.hintSystem;
-    if(hintSystem.currentTimeout || player.popups.length) {
+    if(hintSystem.disabled || player.popups.length) {
+      console.log(hintSystem.disabled, player.popups.length);
       return;
     }
     hintSystem.startCooldown();
     hintSystem.usedHints++;
     //list of all items it makes sense to hint at
-    let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item));
+    let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item) && item.page === window.location.pathname);
     //hinted at item
-    let hintedAt = possibleItemsToHint[Math.floor(Math.random() * possibleItemsToHint.length)];
+    let hintedAt;
+    if(possibleItemsToHint.length) {
+      console.log('hi');
+      hintedAt = possibleItemsToHint[Math.floor(Math.random() * possibleItemsToHint.length)].hint;
+    } else {
+      hintedAt = 'You\'ve gotten everything in this room you need.';
+    }
+
     //paragraph the hint will go into
     let hintP = document.querySelector('#hint');
-    hintP.textContent = hintedAt.hint;
+    hintP.textContent = hintedAt;
 
   };
   this.renderHintButton();
@@ -307,13 +319,13 @@ function Popup(renderFunction) {
     this.section.classList.add('popup');
     let handleInstruction = (this.renderFunction(this.section, this));
     if(handleInstruction === DISMISS_ON_CLICK) {
-      setTimeout(main.addEventListener, 5, 'click', this.onDismiss, {once: true})
+      setTimeout(main.addEventListener, 5, 'click', this.onDismiss, {once: true});
     }
   };
   this.onDismiss = function(){
     main.classList.remove('dimmed');
     let popup = player.popups[0];
-    console.log('popup: ', popup)
+    console.log('popup: ', popup);
     popup.section.remove();
     popup.section = undefined;
     player.popups.shift();
@@ -337,9 +349,9 @@ function test() {
 function introPopup(section, popup) {
   let h3 = section.appendChild(document.createElement('h3'));
   let p = section.appendChild(document.createElement('p'));
- 
+
   h3.textContent = 'This long day of coding seems to never end.';
-  p.textContent = 
+  p.textContent =
     'You\'re pretty sure you just destroyed your company\'s repository \
     by accident, and you\'re definitely losing your job if you can\'t \
     figure out how to undo it. Unfortunately, you\'ve lost your tools \
