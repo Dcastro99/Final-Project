@@ -480,9 +480,9 @@ function dummy1Click(event, silent) {
 function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
   if (window.location.pathname === '/index.html') {
-    a.href = 'classroom.html';
+    a.href = '../classroom.html';
   } else {
-    a.href = 'index.html';
+    a.href = '../index.html';
   }
 }
 
