@@ -139,6 +139,15 @@ function Inventory(pojoItems) {
     this.items.push(new Items('pencil', false, '/index.html', '75rem', '12rem', 'dummy1Click', ''));
     this.items.push(new Items('pins', false, '/index.html', '80rem', '15rem', 'dummy1Click', ''));
     this.items.push(new Items('notebook', false, '/index.html', '3rem', '16rem', 'dummy1Click', ''));
+
+    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
+    this.items.push(new Items('keyboard', false, '/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
+    this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
+    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
+    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
+    this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
+    this.items.forEach(item => item.render());
+
   }
   ///Adds an item from the world to the players inventory.
   this.collect = function(item) {
@@ -205,6 +214,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
     img.src = this.src;
     img.alt = this.name;
     img.id = this.name;
+    img.classList.add('item')
     if (this.collected) {
       // we don't have to check if querySelector did nothing because there should always be enough slots for items
       let slot = document.querySelector('.itemslot:empty');
@@ -263,7 +273,7 @@ function HintSystem(initialCooldown, usedHints) {
   this.onHintRequested = function () {
     //this in this case is the hintbutton...
     let hintSystem = player.hintSystem;
-    if(hintSystem.currentTimeout) {
+    if(hintSystem.currentTimeout || player.popups.length) {
       return;
     }
     hintSystem.startCooldown();
@@ -347,9 +357,12 @@ function test() {
 }
 
 function introPopup(section, popup) {
+  let h3 = section.appendChild(document.createElement('h3'));
   let p = section.appendChild(document.createElement('p'));
-  p.textContent = 'This long day of coding seems to never end. \
-    You\'re pretty sure you just destroyed your company\'s repository \
+ 
+  h3.textContent = 'This long day of coding seems to never end.';
+  p.textContent = 
+    'You\'re pretty sure you just destroyed your company\'s repository \
     by accident, and you\'re definitely losing your job if you can\'t \
     figure out how to undo it. Unfortunately, you\'ve lost your tools \
     and everyone else has gone home already. Go find your things, and \
