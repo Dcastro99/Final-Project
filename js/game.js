@@ -201,6 +201,7 @@ function Items(name, collected, page, x, y, eventName, hint) {
     }
     //haven't collected this, and not on this page means it shouldn't exist anywhere
     if (!this.collected && window.location.pathname !== this.page) {
+      console.log(window.location.pathname)
       return;
     }
     let img = main.appendChild(document.createElement('img'));
