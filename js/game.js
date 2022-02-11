@@ -78,7 +78,7 @@ function Player(savedata) {
   if (!savedata) {
     ///first time setup
     this.startDate = Date.now();
-    if (window.location.pathname !== '/index.html') {
+    if (window.location.pathname !== '/git-help/index.html') {
       //'index.html' will send you to the index html without the slash here
       window.location.href = 'index.html';
       return; //this will run again on the correct site
@@ -119,27 +119,27 @@ function Inventory(pojoItems) {
     }
   } else {
     //first time setup, creates all items with their default vals
-    // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
+    // this.items.push(new Items('logo', false, '/git-help/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
 
-    this.items.push(new Items('folder', false, '/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
-    this.items.push(new Items('binder', false, '/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
-    this.items.push(new Items('stapler', false, '/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
-    this.items.push(new Items('file', false, '/classroom.html', '70rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('sharpener', false, '/classroom.html', '8rem', '20rem', 'dummy1Click', ''));
-    this.items.push(new Items('globe', false, '/classroom.html', '23rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('eraser', false, '/index.html', '23rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('crayons', false, '/index.html', '50rem', '12rem', 'dummy1Click', ''));
-    this.items.push(new Items('clock', false, '/index.html', '63rem', '23rem', 'dummy1Click', ''));
-    this.items.push(new Items('pen', false, '/index.html', '10rem', '11rem', 'dummy1Click', ''));
-    this.items.push(new Items('pencil', false, '/index.html', '75rem', '12rem', 'dummy1Click', ''));
-    this.items.push(new Items('pins', false, '/index.html', '80rem', '15rem', 'dummy1Click', ''));
-    this.items.push(new Items('notebook', false, '/index.html', '3rem', '16rem', 'dummy1Click', ''));
-    this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
-    this.items.push(new Items('keyboard', false, '/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
-    this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
-    this.items.push(new Items('flashlight', false, '/index.html', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
-    this.items.push(new Items('backpack', false, '/index.html', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
-    this.items.push(new Items('textbooks', false, '/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
+    this.items.push(new Items('folder', false, '/git-help/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
+    this.items.push(new Items('binder', false, '/git-help/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
+    this.items.push(new Items('stapler', false, '/git-help/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
+    this.items.push(new Items('file', false, '/git-help/classroom.html', '70rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('sharpener', false, '/git-help/classroom.html', '8rem', '20rem', 'dummy1Click', ''));
+    this.items.push(new Items('globe', false, '/git-help/classroom.html', '23rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('eraser', false, '/git-help/index.html', '23rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('crayons', false, '/git-help/index.html', '50rem', '12rem', 'dummy1Click', ''));
+    this.items.push(new Items('clock', false, '/git-help/index.html', '63rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('pen', false, '/git-help/index.html', '10rem', '11rem', 'dummy1Click', ''));
+    this.items.push(new Items('pencil', false, '/git-help/index.html', '75rem', '12rem', 'dummy1Click', ''));
+    this.items.push(new Items('pins', false, '/git-help/index.html', '80rem', '15rem', 'dummy1Click', ''));
+    this.items.push(new Items('notebook', false, '/git-help/index.html', '3rem', '16rem', 'dummy1Click', ''));
+    this.items.push(new Items('laptop', false, '/git-help/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
+    this.items.push(new Items('keyboard', false, '/git-help/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
+    this.items.push(new Items('mouse', false, '/git-help/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
+    this.items.push(new Items('flashlight', false, '/git-help/index.html', '89rem', '37rem', 'flashlightClick', 'The flashlight is on the right half.'));
+    this.items.push(new Items('backpack', false, '/git-help/index.html', '28rem', '43rem', 'genericClick', 'The backpack is on the top half.'));
+    this.items.push(new Items('textbooks', false, '/git-help/classroom.html', '52rem', '22rem', 'genericClick', 'The textbooks are on the bottom half.'));
     this.items.forEach(item => item.render());
   }
   ///Adds an item from the world to the players inventory.
@@ -479,10 +479,10 @@ function dummy1Click(event, silent) {
 
 function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
-  if (window.location.pathname === '/index.html') {
-    a.href = '/classroom.html';
+  if (window.location.pathname === '/git-help/index.html') {
+    a.href = '/git-help/classroom.html';
   } else {
-    a.href = '/index.html';
+    a.href = '/git-help/index.html';
   }
 }
 
