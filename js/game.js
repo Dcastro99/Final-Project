@@ -10,6 +10,7 @@ const funcName2Function = {
   'genericClick': genericClick,
   'laptopClick': laptopClick,
   'flashlightClick': flashlightClick,
+  'dummy1Click': dummy1Click
 };
 ///player init populates this list with list duos (function, item ref)
 ///after player has inited and loaded, reTrigger events will get everything in this list...
@@ -119,6 +120,20 @@ function Inventory(pojoItems) {
   } else {
     //first time setup, creates all items with their default vals
     // this.items.push(new Items('logo', false, '/index.html', '30px', '5rem', 'genericClick', 'this is a hint for logo!'));
+  
+    this.items.push(new Items('folder', false, '/classroom.html', '28rem', '10rem', 'dummy1Click', ''));
+    this.items.push(new Items('binder', false, '/classroom.html', '42rem', '24rem', 'dummy1Click', ''));
+    this.items.push(new Items('stapler', false, '/classroom.html', '62rem', '14rem', 'dummy1Click', ''));
+    this.items.push(new Items('file', false, '/classroom.html', '70rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('sharpener', false, '/classroom.html', '8rem', '20rem', 'dummy1Click', ''));
+    this.items.push(new Items('globe', false, '/classroom.html', '23rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('eraser', false, '/index.html', '23rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('crayons', false, '/index.html', '50rem', '12rem', 'dummy1Click', ''));
+    this.items.push(new Items('clock', false, '/index.html', '63rem', '23rem', 'dummy1Click', ''));
+    this.items.push(new Items('pen', false, '/index.html', '10rem', '11rem', 'dummy1Click', ''));
+    this.items.push(new Items('pencil', false, '/index.html', '75rem', '12rem', 'dummy1Click', ''));
+    this.items.push(new Items('pins', false, '/index.html', '80rem', '15rem', 'dummy1Click', ''));
+    this.items.push(new Items('notebook', false, '/index.html', '3rem', '16rem', 'dummy1Click', ''));
     this.items.push(new Items('laptop', false, '/index.html', '11rem', '26.5rem', 'laptopClick', 'Your laptop is on the left half.'));
     this.items.push(new Items('keyboard', false, '/classroom.html', '80rem', '22rem', 'genericClick', 'Your keyboard is on the right side.'));
     this.items.push(new Items('mouse', false, '/classroom.html', '13rem', '23rem', 'genericClick', 'Your mouse is on the left side.'));
@@ -375,6 +390,12 @@ function introPopup(section, popup) {
   return DISMISS_NONE; //we handle disposals with the above event listener
 }
 
+function dummyPopup(section) {
+  let p = section.appendChild(document.createElement('p'));
+  p.textContent = 'This item is not needed to escape!';
+  return DISMISS_ON_CLICK;
+}
+
 function laptopPopup(section) {
   let p = section.appendChild(document.createElement('p'));
   p.textContent = 'Your old trusty laptop! Oh, but damn. Someone took your mouse, and the keyboard was ruined by a relative a couple weeks back! (You\'ll need a new keyboard, too!)';
@@ -422,6 +443,14 @@ function flashlightClick(event, silent) {
   player.inventory.collect(item);
 }
 
+function dummy1Click(event, silent) {
+  if (!event.target.alt || player.popups.length) {
+    return;
+  }
+  if (!silent) {
+    new Popup(dummyPopup);
+  }
+}
 
 function enableDoorButton() {
   let a = document.querySelector('#nextRoomButton');
