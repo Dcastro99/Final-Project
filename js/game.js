@@ -262,7 +262,11 @@ function HintSystem(initialCooldown, usedHints) {
     hintSystem.startCooldown();
     hintSystem.usedHints++;
     //list of all items it makes sense to hint at
-    let possibleItemsToHint = player.inventory.items.filter(item => !player.inventory.collected.includes(item) && item.page === window.location.pathname);
+    let possibleItemsToHint = player.inventory.items.filter(item => {
+      !player.inventory.collected.includes(item)
+      && item.page === window.location.pathname
+      && item.hint;
+    });
     //hinted at item
     let hintedAt;
     if(possibleItemsToHint.length) {
